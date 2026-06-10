@@ -8,8 +8,9 @@ scratch on every question.
 Plain Markdown. No database, no server, no accounts, no vendor lock-in. Works with Claude Code,
 Cursor, Codex, Gemini CLI, Aider, a local LLM, or any desktop AI app.
 
-### ⬇️ Get it: `git clone https://github.com/taurran/pokevault.git` — or [download the ZIP](https://github.com/taurran/pokevault/archive/refs/heads/master.zip)
-Then run `./bootstrap.sh` (macOS/Linux) or `.\bootstrap.ps1` (Windows). That's it — details below.
+### ⬇️ [**Download PokeVault (.zip)**](https://github.com/taurran/pokevault/archive/refs/heads/master.zip)
+**One file, the whole kit.** Download it, extract the folder **wherever you want it to live**, then run
+`./bootstrap.sh` (macOS/Linux) or `.\bootstrap.ps1` (Windows). That's it — details below.
 
 > **The idea in one line:** compile raw sources into a living Markdown wiki *once*; query the wiki,
 > not the pile; never overwrite, never forget.
@@ -18,12 +19,13 @@ Then run `./bootstrap.sh` (macOS/Linux) or `.\bootstrap.ps1` (Windows). That's i
 
 ## Install (60 seconds)
 
-### 1. Get it
-**Clone (recommended):**
-```bash
-git clone https://github.com/taurran/pokevault.git && cd pokevault
-```
-Or **[download the ZIP](https://github.com/taurran/pokevault/archive/refs/heads/master.zip)** — one click, the whole kit — then extract and `cd` into the folder.
+### 1. Get it — download the ZIP
+
+**[⬇️ Download PokeVault (.zip)](https://github.com/taurran/pokevault/archive/refs/heads/master.zip)** — one click, the whole kit in a single file.
+
+**Extract it wherever you want it to live** — your home folder, a `Tools/` directory, anywhere; *you* choose where it goes. Then open the extracted `pokevault` folder in a terminal and continue to step 2.
+
+<sub>Prefer git? `git clone https://github.com/taurran/pokevault.git` works too — but the ZIP is the simplest path and lets you put the folder exactly where you want it.</sub>
 
 ### 2. Run the bootstrap
 The bootstrap places the vault at your home directory **and** wires its skills into your coding agent.

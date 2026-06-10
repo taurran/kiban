@@ -17,11 +17,12 @@ query the wiki, not the pile; never overwrite, never forget.
 
 INSTALL (about 60 seconds)
 ------------------------------------------------------------------------------
-1. GET IT
-   Clone (recommended):
-     git clone https://github.com/taurran/pokevault.git && cd pokevault
-   Or download the ZIP and extract it:
+1. GET IT - download the ZIP (recommended)
      https://github.com/taurran/pokevault/archive/refs/heads/master.zip
+   One file, the whole kit. Extract it WHEREVER you want it to live (your
+   home folder, a Tools/ directory, anywhere - you choose where it goes),
+   then open the extracted pokevault folder in a terminal.
+   (Prefer git? You can: git clone https://github.com/taurran/pokevault.git)
 
 2. RUN THE BOOTSTRAP  (places the vault + wires skills into your AI agent;
    safe and idempotent - re-run anytime)
