@@ -1,0 +1,32 @@
+# PokeVault — system state (machine-managed; safe to edit the user fields below)
+# This hidden folder holds the vault's operational state. It is NOT knowledge content.
+# Obsidian ignores it; git ignores the volatile parts (see .gitignore).
+
+schema_version: "1.0"
+pokevault_version: "1.0.0"          # set by the installer / update skill; do not hand-bump
+created: null                         # ISO-8601 UTC, stamped on first init
+vault_root: "~/PokeVault/Vault"                 # where this vault lives on THIS machine (informational)
+
+# Zones with an LLM wiki (raw -> pages). The wiki engine (AGENTS.md) iterates these.
+wiki_zones:
+  - second-brain
+  - work
+  - personal        # hybrid: operational CRM folders (people/areas/goals/calendar) + a wiki/ for life-synthesis
+
+# No purely-operational knowledge zones remain. (toolkit/ holds skills/agents/context and is not
+# iterated by the wiki engine.)
+operational_zones: []
+
+# The single shared daily note. Captured freely; synthesis routes fragments to the zones above.
+capture:
+  daily: "daily"                      # vault-root daily note folder (work + personal)
+
+# User preferences (safe to edit by hand)
+preferences:
+  default_inbox: second-brain          # which zone "drop this" defaults to
+  ingest_autoapprove_max_fragments: 3  # ingests with more fragments pause for approval (AGENTS.md §2)
+  pending_backlog_warn_days: 7         # lint warns about sources unprocessed longer than this
+  low_confidence_review_days: 30       # lint nudges single-source pages older than this
+  daily_ambiguous_routing: default-route  # ambiguous capture -> best-guess zone + log in daily/review.md (AGENTS.md §8)
+  research_promote_target_default: auto   # auto | second-brain | work — where promoted findings land when promote_target is unset (AGENTS.md §8)
+  research_promote_autoapprove: false     # if true, a vault:promote tag compiles into the wiki without asking

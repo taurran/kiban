@@ -1,0 +1,23 @@
+# PokeVault repo .gitignore
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Build / tooling
+build/
+.venv/
+__pycache__/
+
+# Obsidian: ship the config schema, ignore per-machine workspace + caches
+**/.obsidian/workspace*.json
+**/.obsidian/cache
+
+# Maintainer-only / never-public (defense in depth)
+project/
+handoff.md
+HANDOFF.md
+.planning/
+
+# Release artifacts attach to GitHub Releases, not committed to the tree
+dist/

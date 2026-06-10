@@ -1,0 +1,11 @@
+# Knowledge Vault — Cursor Rules
+
+This folder is a portable knowledge vault (PokeVault). Before any ingest, query, or maintenance
+operation, read `AGENTS.md` in the vault root — it is the authoritative schema.
+
+Core rules (full set in AGENTS.md §4):
+- Raw sources in `*/wiki/raw/` are immutable. Never modify them.
+- Synthesized pages go in `*/wiki/pages/{sources,entities,concepts,synthesis,references}/`.
+- Append, don't rewrite. Search before create. Provenance (`sources:`) on every page.
+- Flag contradictions; never resolve them silently.
+- Update `index.md` and append to `log.md` after every change.

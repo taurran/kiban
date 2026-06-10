@@ -1,0 +1,24 @@
+# PokeVault — end-user vault .gitignore
+# Versioning your vault with git gives you free page history + rollback.
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Obsidian volatile state (the shared config IS tracked: app.json, core-plugins.json,
+# community-plugins.json, daily-notes.json, templates.json)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.obsidian/.trash/
+.trash/
+
+# Plugin runtime data is per-machine; track the recommendation list, not the installed binaries
+.obsidian/plugins/
+.obsidian/themes/
+
+# Code workspaces and transient staging are NOT knowledge — ignore content, keep the pointer READMEs
+projects/*
+!projects/README.md
+scratch/*
+!scratch/README.md

@@ -1,0 +1,14 @@
+{
+  "newLinkFormat": "absolute",
+  "useMarkdownLinks": false,
+  "alwaysUpdateLinks": true,
+  "promptDelete": true,
+  "showUnsupportedFiles": false,
+  "newFileLocation": "current",
+  "attachmentFolderPath": "./",
+  "userIgnoreFilters": [
+    "projects/",
+    "scratch/",
+    ".vault/"
+  ]
+}
