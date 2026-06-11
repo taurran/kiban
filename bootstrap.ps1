@@ -48,23 +48,23 @@ if (-not (Test-Path $VaultRoot)) {
   Write-Host "-> vault exists; leaving your content untouched (adding skills + agent bindings only)"
 }
 
-# 2) Canonical, tool-neutral home for the kit's skills: toolkit\skills\
+# 2) Canonical, tool-neutral home for the kit's skills: toolkit\skills\<NN-category>\<name>.md
+#    Categories organize the source tree only; they do NOT propagate to runtimes.
 $toolkitSkills = Join-Path $VaultRoot 'toolkit\skills'
 New-Item -ItemType Directory -Force -Path $toolkitSkills | Out-Null
 $pkgSkills = Join-Path $Pkg 'skills'
 if (Test-Path $pkgSkills) {
-  Write-Host "-> installing kit skills into toolkit\skills\"
-  Get-ChildItem -Path $pkgSkills -Filter *.md | ForEach-Object {
-    Copy-Item $_.FullName (Join-Path $toolkitSkills $_.Name) -Force
-  }
+  Write-Host "-> installing kit skills into toolkit\skills\ (organized by category)"
+  Copy-Item -Recurse -Force (Join-Path $pkgSkills '*') $toolkitSkills
 }
 
 # 3) Generate Agent-Skills bindings for Claude Code: .claude\skills\<name>\SKILL.md
+#    Recurse the category dirs and FLATTEN by skill name - runtimes keep the flat contract.
 Write-Host "-> wiring Claude Code skills -> .claude\skills\<name>\SKILL.md"
 $claudeSkills = Join-Path $VaultRoot '.claude\skills'
 New-Item -ItemType Directory -Force -Path $claudeSkills | Out-Null
 $count = 0
-Get-ChildItem -Path $toolkitSkills -Filter *.md | ForEach-Object {
+Get-ChildItem -Path $toolkitSkills -Recurse -Filter *.md | ForEach-Object {
   $name = $_.BaseName
   $dir = Join-Path $claudeSkills $name
   New-Item -ItemType Directory -Force -Path $dir | Out-Null
@@ -87,7 +87,7 @@ Vault installed at: $VaultRoot
 Next steps:
   - Claude Code : open "$VaultRoot" - reads CLAUDE.md -> AGENTS.md; skills auto-load from .claude\skills\
   - Codex/Cursor/Gemini/Aider : open "$VaultRoot" - read AGENTS.md natively; skills listed in AGENTS.md section 11
-  - Any assistant : "Read AGENTS.md and follow it." Run a skill manually: "Read toolkit\skills\<name>.md and follow it."
+  - Any assistant : "Read AGENTS.md and follow it." Run a skill manually: "Read toolkit\skills\<category>\<name>.md and follow it."
   - Finish Obsidian : run the 'obsidian-setup' skill.
 
 Re-run this script anytime to resync skills after an update.
