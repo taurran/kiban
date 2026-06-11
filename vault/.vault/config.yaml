@@ -3,7 +3,7 @@
 # Obsidian ignores it; git ignores the volatile parts (see .gitignore).
 
 schema_version: "1.0"
-pokevault_version: "1.1.0"          # set by the installer / update skill; do not hand-bump
+pokevault_version: "1.1.1"          # set by the installer / update skill; do not hand-bump
 created: null                         # ISO-8601 UTC, stamped on first init
 vault_root: "~/PokeVault"                 # where this vault lives on THIS machine (informational)
 

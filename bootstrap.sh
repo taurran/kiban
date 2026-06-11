@@ -48,34 +48,33 @@ else
   echo "→ vault exists; leaving your content untouched (adding skills + agent bindings only)"
 fi
 
-# 2) Canonical, tool-neutral home for the kit's skills: toolkit/skills/
+# 2) Canonical, tool-neutral home for the kit's skills: toolkit/skills/<NN-category>/<name>.md
+#    Categories organize the source tree only; they do NOT propagate to runtimes.
 mkdir -p "$VAULT/toolkit/skills"
 if [ -d "$PKG/skills" ]; then
-  echo "→ installing kit skills into toolkit/skills/"
-  for f in "$PKG"/skills/*.md; do
-    [ -e "$f" ] || continue
-    cp "$f" "$VAULT/toolkit/skills/$(basename "$f")"
-  done
+  echo "→ installing kit skills into toolkit/skills/ (organized by category)"
+  cp -R "$PKG/skills/." "$VAULT/toolkit/skills/"
 fi
 
 # 3) Generate Agent-Skills bindings for Claude Code: .claude/skills/<name>/SKILL.md
 #    (open Agent Skills standard: a folder per skill containing SKILL.md)
+#    Recurse the category dirs and FLATTEN by skill name — runtimes keep the flat contract.
 echo "→ wiring Claude Code skills → .claude/skills/<name>/SKILL.md"
 mkdir -p "$VAULT/.claude/skills"
 count=0
-for f in "$VAULT"/toolkit/skills/*.md; do
+while IFS= read -r f; do
   [ -e "$f" ] || continue
   name="$(basename "$f" .md)"
   mkdir -p "$VAULT/.claude/skills/$name"
   cp "$f" "$VAULT/.claude/skills/$name/SKILL.md"
   count=$((count+1))
-done
+done < <(find "$VAULT/toolkit/skills" -type f -name '*.md' | sort)
 echo "  ✓ $count skill(s) wired"
 
 # Optional: mirror to the vendor-neutral .agents/skills/ location (other tools).
 # Uncomment if your agent reads .agents/skills/ instead of .claude/skills/:
 # mkdir -p "$VAULT/.agents/skills"
-# for f in "$VAULT"/toolkit/skills/*.md; do n="$(basename "$f" .md)"; mkdir -p "$VAULT/.agents/skills/$n"; cp "$f" "$VAULT/.agents/skills/$n/SKILL.md"; done
+# find "$VAULT/toolkit/skills" -type f -name '*.md' | while IFS= read -r f; do n="$(basename "$f" .md)"; mkdir -p "$VAULT/.agents/skills/$n"; cp "$f" "$VAULT/.agents/skills/$n/SKILL.md"; done
 
 # 4) Sanity-check the engine + per-tool pointers.
 echo "→ engine + pointers:"
@@ -93,7 +92,7 @@ Next steps:
   • Codex / Cursor /
     Gemini / Aider …   : open "$VAULT" — they read AGENTS.md natively; skills are listed in AGENTS.md §11
   • Any assistant      : "Read AGENTS.md and follow it." To run a skill without a skills-aware tool:
-                         "Read toolkit/skills/<name>.md and follow it."
+                         "Read toolkit/skills/<category>/<name>.md and follow it."
   • Finish Obsidian    : run the 'obsidian-setup' skill (install Dataview/Templater/Tag Wrangler/Periodic Notes)
 
 Re-run this script anytime to resync skills after an update.

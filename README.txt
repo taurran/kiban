@@ -1,6 +1,6 @@
 ==============================================================================
  PokeVault  -  a portable "Second Brain + LLM Wiki" you carry to any machine
- Version 1.1.0
+ Version 1.1.1
 ==============================================================================
 
 WHAT IT IS
@@ -61,7 +61,7 @@ INSTALL (about 60 seconds)
 WHAT THE BOOTSTRAP DOES
 ------------------------------------------------------------------------------
 1. Copies vault/ to ~/PokeVault (skips if one exists - never clobbers your data).
-2. Installs skills to ~/PokeVault/toolkit/skills/<name>.md (tool-neutral source).
+2. Installs skills to ~/PokeVault/toolkit/skills/<NN-category>/<name>.md (tool-neutral source, by category).
 3. Generates Claude Code bindings at ~/PokeVault/.claude/skills/<name>/SKILL.md.
 4. Confirms the engine (AGENTS.md) and per-tool pointers are in place.
 
@@ -88,7 +88,7 @@ THE FOUR ZONES
 second-brain/  your self-model (profile/) + personal knowledge wiki
 work/          projects, deliverables, records + work knowledge wiki
 personal/      life management - people (CRM), areas, goals, calendar + a personal-life wiki
-toolkit/       your own skills, agents, context
+toolkit/       your own skills (by category), agents, agent-sops, context
 
 One shared daily/ note is the front door: capture freely, your assistant routes
 each note to the right zone (anything ambiguous goes to daily/review.md for
