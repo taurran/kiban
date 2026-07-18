@@ -1,11 +1,11 @@
-# PokeVault Blueprint — Structure, Obsidian Compatibility & Frontmatter Standards
+﻿# Kiban Blueprint â€” Structure, Obsidian Compatibility & Frontmatter Standards
 
-> **This is the canonical reference for the vault.** Everything else — `AGENTS.md`, the zone
-> READMEs, the wiring skills — derives from this document. If you are setting the vault up on a
+> **This is the canonical reference for the vault.** Everything else â€” `AGENTS.md`, the zone
+> READMEs, the wiring skills â€” derives from this document. If you are setting the vault up on a
 > new machine from scratch, you can reconstruct the entire thing from this file plus
 > `02-llm-wiki-synthesis-and-daily-notes.md`.
 
-**Kit:** PokeVault — a portable, brand-neutral "Second Brain + LLM Wiki."
+**Kit:** Kiban â€” a portable, brand-neutral "Second Brain + LLM Wiki."
 **Interface:** Obsidian (optional but recommended).
 **Engine:** any LLM assistant with filesystem access, driven by `vault/AGENTS.md`.
 **Status of this build:** structure + engine + wiring are complete and usable today. The wiki
@@ -18,7 +18,7 @@ assistant until purpose-built skills ship (see File B and the project roadmap).
 
 A knowledge vault that **compounds**. You collect raw material (articles, notes, meeting records,
 voice memos, screenshots) into immutable `raw/` folders. An AI assistant **compiles** that
-material — once — into interlinked Markdown pages under `pages/`. From then on you (and your
+material â€” once â€” into interlinked Markdown pages under `pages/`. From then on you (and your
 assistants) query the *compiled* wiki instead of re-reading the raw pile. New sources update the
 pages; contradictions get flagged; nothing silently overwrites prior knowledge.
 
@@ -38,137 +38,137 @@ Three properties make it portable and durable:
 
 ## 2. Where to put the vault (placement best practice)
 
-The vault root is **`~/PokeVault/`** by convention. You can name it anything; the folder name becomes
+The vault root is **`~/Kiban/Vault/`** by convention. You can name it anything; the folder name becomes
 the Obsidian vault display name.
 
-**macOS / Linux:** `~/PokeVault` (i.e., `/Users/<you>/PokeVault` or `/home/<you>/PokeVault`).
+**macOS / Linux:** `~/Kiban/Vault` (i.e., `/Users/<you>/Kiban/Vault` or `/home/<you>/Kiban/Vault`).
 
-**Windows:** `C:\PokeVault` (a local, drive-root folder — deliberately *not* under `Documents`, which is usually OneDrive-synced).
+**Windows:** `$env:USERPROFILE\Kiban\Vault` (a local, drive-root folder â€” deliberately *not* under `Documents`, which is usually OneDrive-synced).
 
-### Cloud sync vs. Obsidian Sync — choose one primary
+### Cloud sync vs. Obsidian Sync â€” choose one primary
 
 This matters and trips people up:
 
 - If you sync the vault with **Obsidian Sync** (or Syncthing / git), **do not also put it inside a
   cloud-synced folder** like OneDrive, iCloud Drive, Dropbox, or Google Drive. Two sync engines
   fighting over the same files create conflict copies and corrupt `.obsidian` state. Put the vault
-  at `~/PokeVault` (outside any cloud folder) and let one sync tool own it.
-- If you have **no cross-device sync** and just want a backup, a cloud folder is fine — but expect
+  at `~/Kiban/Vault` (outside any cloud folder) and let one sync tool own it.
+- If you have **no cross-device sync** and just want a backup, a cloud folder is fine â€” but expect
   a sync icon on the folder, and prefer "keep on device" so files are always local (Obsidian needs
   real local files, not cloud placeholders).
-- On Windows, if you must keep it under OneDrive Known-Folder-Move, right-click → **Always keep on
+- On Windows, if you must keep it under OneDrive Known-Folder-Move, right-click â†’ **Always keep on
   this device** to prevent dehydration.
 
 **Recommended for the disconnected-but-Obsidian-synced machine this kit targets:** install at
-`~/PokeVault`, enable Obsidian Sync (or git), and keep it out of OneDrive/iCloud.
+`~/Kiban/Vault`, enable Obsidian Sync (or git), and keep it out of OneDrive/iCloud.
 
 ---
 
 ## 3. Complete folder structure (annotated)
 
 ```
-~/PokeVault/                                ← Obsidian vault root (open THIS)
-│
-├── AGENTS.md                           ← the wiki engine: schema every assistant reads
-├── CLAUDE.md                           ← Claude Code entry point → AGENTS.md
-├── .cursorrules                        ← Cursor entry point → AGENTS.md
-├── README.md                           ← human landing page
-│
-├── .obsidian/                          ← Obsidian config (tracked: see §4). Auto-hidden by Obsidian.
-│   ├── app.json                        ←   absolute links + ignore filters
-│   ├── core-plugins.json               ←   Daily Notes + Templates enabled
-│   ├── community-plugins.json          ←   recommended plugin IDs (you still install them)
-│   ├── daily-notes.json                ←   daily notes → daily/, template seeded
-│   └── templates.json                  ←   core Templates folder
-│
-├── .vault/                             ← system state (NOT knowledge). Auto-hidden by Obsidian.
-│   ├── config.yaml                     ←   vault preferences (user-owned, safe to edit)
-│   └── state/
-│       ├── second-brain/{manifest.json,pending.json}
-│       ├── work/{manifest.json,pending.json}
-│       └── daily/{manifest.json,pending.json}   ← daily-note routing state
-│
-├── .gitignore                          ← git-friendly defaults (see §9)
-│
-├── second-brain/                       ← ZONE: WHO YOU ARE + WHAT YOU KNOW (private)
-│   ├── README.md
-│   ├── profile/                        ←   cognitive fingerprint / self-model (read by assistants)
-│   │   ├── identity.md  voice.md  preferences.md
-│   │   ├── goals.md  relationships.md  projects.md  patterns.md
-│   ├── initiatives/                    ←   personal project/goal tracking
-│   ├── artifacts/                      ←   diagrams, exports, personal artifacts
-│   └── wiki/                           ←   personal LLM wiki (see §3.1)
-│
-├── work/                               ← ZONE: YOUR WORK (private)
-│   ├── README.md
-│   ├── initiatives/                    ←   per-project/engagement tracking (PM)
-│   ├── deliverables/                   ←   formal docs you author
-│   │   └── _templates/
-│   ├── records/                        ←   official / signed copies
-│   ├── artifacts/                      ←   diagrams, decks, exports
-│   └── wiki/                           ←   work LLM wiki (see §3.1)
-│
-├── personal/                           ← ZONE: YOUR LIFE (private, hybrid — CRM + wiki)
-│   ├── README.md
-│   ├── people/                         ←   Personal CRM (one file per person)
-│   ├── areas/                          ←   PARA life domains (health, finances, hobbies…)
-│   ├── goals/                          ←   active goal tracking
-│   ├── calendar/                       ←   key dates, events, upcoming.md dashboard
-│   ├── _templates/                     ←   person / area / goal / event
-│   └── wiki/                           ←   personal-life LLM wiki (see §3.1; clone of second-brain/wiki, no meetings/)
-│
-├── toolkit/                            ← ZONE: YOUR AI ADDITIONS (private, no wiki)
-│   ├── README.md
-│   ├── skills/                         ←   skills by category: <NN-category>/<name>.md (see §3.5)
-│   │   ├── 01-foundations/
-│   │   ├── 02-research/
-│   │   └── 08-knowledge/
-│   ├── agents/
-│   ├── agent-sops/                     ←   multi-step agent procedures (SOPs) tying skills + agents together
-│   └── context/
-│
-├── daily/                              ← the ONE shared daily note (work + personal) — visible
-│   ├── index.md                        ←   chronological journal index (pattern detection)
-│   ├── review.md                       ←   reclassification queue (defaulted routings)
-│   └── _templates/daily.md
-│
-├── research/                           ← WORKSHOP: investigation projects (visible, not wiki)
-│   ├── README.md
-│   ├── index.md                        ←   catalog of active/completed research projects
-│   ├── _templates/                     ←   project scaffold template
-│   ├── _archive/                       ←   completed/abandoned projects
-│   └── <project-slug>/                 ←   one folder per investigation
-│       ├── README.md                   ←     scope, question, status
-│       ├── raw/                        ←     project-local source material
-│       ├── notes/                      ←     working notes and drafts
-│       └── findings.md                 ←     final synthesis (promotion candidate)
-│
-├── projects/                           ← code workspaces — Obsidian-ignored, git-ignored
-│   └── README.md
-└── scratch/                            ← transient staging — Obsidian-ignored, git-ignored
-    └── README.md
+~/Kiban/Vault/                                â† Obsidian vault root (open THIS)
+â”‚
+â”œâ”€â”€ AGENTS.md                           â† the wiki engine: schema every assistant reads
+â”œâ”€â”€ CLAUDE.md                           â† Claude Code entry point â†’ AGENTS.md
+â”œâ”€â”€ .cursorrules                        â† Cursor entry point â†’ AGENTS.md
+â”œâ”€â”€ README.md                           â† human landing page
+â”‚
+â”œâ”€â”€ .obsidian/                          â† Obsidian config (tracked: see Â§4). Auto-hidden by Obsidian.
+â”‚   â”œâ”€â”€ app.json                        â†   absolute links + ignore filters
+â”‚   â”œâ”€â”€ core-plugins.json               â†   Daily Notes + Templates enabled
+â”‚   â”œâ”€â”€ community-plugins.json          â†   recommended plugin IDs (you still install them)
+â”‚   â”œâ”€â”€ daily-notes.json                â†   daily notes â†’ daily/, template seeded
+â”‚   â””â”€â”€ templates.json                  â†   core Templates folder
+â”‚
+â”œâ”€â”€ .vault/                             â† system state (NOT knowledge). Auto-hidden by Obsidian.
+â”‚   â”œâ”€â”€ config.yaml                     â†   vault preferences (user-owned, safe to edit)
+â”‚   â””â”€â”€ state/
+â”‚       â”œâ”€â”€ second-brain/{manifest.json,pending.json}
+â”‚       â”œâ”€â”€ work/{manifest.json,pending.json}
+â”‚       â””â”€â”€ daily/{manifest.json,pending.json}   â† daily-note routing state
+â”‚
+â”œâ”€â”€ .gitignore                          â† git-friendly defaults (see Â§9)
+â”‚
+â”œâ”€â”€ second-brain/                       â† ZONE: WHO YOU ARE + WHAT YOU KNOW (private)
+â”‚   â”œâ”€â”€ README.md
+â”‚   â”œâ”€â”€ profile/                        â†   cognitive fingerprint / self-model (read by assistants)
+â”‚   â”‚   â”œâ”€â”€ identity.md  voice.md  preferences.md
+â”‚   â”‚   â”œâ”€â”€ goals.md  relationships.md  projects.md  patterns.md
+â”‚   â”œâ”€â”€ initiatives/                    â†   personal project/goal tracking
+â”‚   â”œâ”€â”€ artifacts/                      â†   diagrams, exports, personal artifacts
+â”‚   â””â”€â”€ wiki/                           â†   personal LLM wiki (see Â§3.1)
+â”‚
+â”œâ”€â”€ work/                               â† ZONE: YOUR WORK (private)
+â”‚   â”œâ”€â”€ README.md
+â”‚   â”œâ”€â”€ initiatives/                    â†   per-project/engagement tracking (PM)
+â”‚   â”œâ”€â”€ deliverables/                   â†   formal docs you author
+â”‚   â”‚   â””â”€â”€ _templates/
+â”‚   â”œâ”€â”€ records/                        â†   official / signed copies
+â”‚   â”œâ”€â”€ artifacts/                      â†   diagrams, decks, exports
+â”‚   â””â”€â”€ wiki/                           â†   work LLM wiki (see Â§3.1)
+â”‚
+â”œâ”€â”€ personal/                           â† ZONE: YOUR LIFE (private, hybrid â€” CRM + wiki)
+â”‚   â”œâ”€â”€ README.md
+â”‚   â”œâ”€â”€ people/                         â†   Personal CRM (one file per person)
+â”‚   â”œâ”€â”€ areas/                          â†   PARA life domains (health, finances, hobbiesâ€¦)
+â”‚   â”œâ”€â”€ goals/                          â†   active goal tracking
+â”‚   â”œâ”€â”€ calendar/                       â†   key dates, events, upcoming.md dashboard
+â”‚   â”œâ”€â”€ _templates/                     â†   person / area / goal / event
+â”‚   â””â”€â”€ wiki/                           â†   personal-life LLM wiki (see Â§3.1; clone of second-brain/wiki, no meetings/)
+â”‚
+â”œâ”€â”€ toolkit/                            â† ZONE: YOUR AI ADDITIONS (private, no wiki)
+â”‚   â”œâ”€â”€ README.md
+â”‚   â”œâ”€â”€ skills/                         â†   skills by category: <NN-category>/<name>.md (see Â§3.5)
+â”‚   â”‚   â”œâ”€â”€ 01-foundations/
+â”‚   â”‚   â”œâ”€â”€ 02-research/
+â”‚   â”‚   â””â”€â”€ 08-knowledge/
+â”‚   â”œâ”€â”€ agents/
+â”‚   â”œâ”€â”€ agent-sops/                     â†   multi-step agent procedures (SOPs) tying skills + agents together
+â”‚   â””â”€â”€ context/
+â”‚
+â”œâ”€â”€ daily/                              â† the ONE shared daily note (work + personal) â€” visible
+â”‚   â”œâ”€â”€ index.md                        â†   chronological journal index (pattern detection)
+â”‚   â”œâ”€â”€ review.md                       â†   reclassification queue (defaulted routings)
+â”‚   â””â”€â”€ _templates/daily.md
+â”‚
+â”œâ”€â”€ research/                           â† WORKSHOP: investigation projects (visible, not wiki)
+â”‚   â”œâ”€â”€ README.md
+â”‚   â”œâ”€â”€ index.md                        â†   catalog of active/completed research projects
+â”‚   â”œâ”€â”€ _templates/                     â†   project scaffold template
+â”‚   â”œâ”€â”€ _archive/                       â†   completed/abandoned projects
+â”‚   â””â”€â”€ <project-slug>/                 â†   one folder per investigation
+â”‚       â”œâ”€â”€ README.md                   â†     scope, question, status
+â”‚       â”œâ”€â”€ raw/                        â†     project-local source material
+â”‚       â”œâ”€â”€ notes/                      â†     working notes and drafts
+â”‚       â””â”€â”€ findings.md                 â†     final synthesis (promotion candidate)
+â”‚
+â”œâ”€â”€ projects/                           â† code workspaces â€” Obsidian-ignored, git-ignored
+â”‚   â””â”€â”€ README.md
+â””â”€â”€ scratch/                            â† transient staging â€” Obsidian-ignored, git-ignored
+    â””â”€â”€ README.md
 ```
 
 ### 3.1 The wiki layout (identical in every wiki-bearing zone)
 
 ```
 wiki/
-├── index.md        ← content catalog (assistant-maintained; one line per page)
-├── log.md          ← append-only chronological record of every operation
-├── review.md       ← human-attention queue (contradictions, dupes, consolidation)
-├── raw/            ← IMMUTABLE inputs (assistants read, never write)
-│   ├── inbox/      ←   universal drop zone
-│   ├── meetings/   ←   meeting notes / transcripts (work zone only)
-│   ├── notes/      ←   quick notes + voice transcripts (frontmatter source: note|voice)
-│   ├── media/      ←   screenshots/whiteboards (binary) + a .md sidecar processed as a source
-│   ├── processed/  ←   sources moved here after ingest (dedup-by-absence; never rescanned)
-│   └── _archive/   ←   aged-out raw (YYYY/ subdirs); pages keep pointers
-└── pages/          ← COMPILED synthesis (assistants create + update)
-    ├── sources/    ←   one summary per ingested source ("what did I learn from X?")
-    ├── entities/   ←   people, orgs, products, projects
-    ├── concepts/   ←   ideas, frameworks, methods
-    ├── synthesis/  ←   multi-source analyses, timelines, evolving theses
-    └── references/ ←   tables, matrices, quick-reference
+â”œâ”€â”€ index.md        â† content catalog (assistant-maintained; one line per page)
+â”œâ”€â”€ log.md          â† append-only chronological record of every operation
+â”œâ”€â”€ review.md       â† human-attention queue (contradictions, dupes, consolidation)
+â”œâ”€â”€ raw/            â† IMMUTABLE inputs (assistants read, never write)
+â”‚   â”œâ”€â”€ inbox/      â†   universal drop zone
+â”‚   â”œâ”€â”€ meetings/   â†   meeting notes / transcripts (work zone only)
+â”‚   â”œâ”€â”€ notes/      â†   quick notes + voice transcripts (frontmatter source: note|voice)
+â”‚   â”œâ”€â”€ media/      â†   screenshots/whiteboards (binary) + a .md sidecar processed as a source
+â”‚   â”œâ”€â”€ processed/  â†   sources moved here after ingest (dedup-by-absence; never rescanned)
+â”‚   â””â”€â”€ _archive/   â†   aged-out raw (YYYY/ subdirs); pages keep pointers
+â””â”€â”€ pages/          â† COMPILED synthesis (assistants create + update)
+    â”œâ”€â”€ sources/    â†   one summary per ingested source ("what did I learn from X?")
+    â”œâ”€â”€ entities/   â†   people, orgs, products, projects
+    â”œâ”€â”€ concepts/   â†   ideas, frameworks, methods
+    â”œâ”€â”€ synthesis/  â†   multi-source analyses, timelines, evolving theses
+    â””â”€â”€ references/ â†   tables, matrices, quick-reference
 ```
 
 ### 3.2 Why each piece exists
@@ -179,14 +179,14 @@ wiki/
 | **`pages/` split into 5 buckets** | Routing makes synthesis findable and keeps pages single-purpose. Entities vs concepts vs cross-source analysis vs tables are genuinely different shapes of knowledge. |
 | **`sources/` per-source summaries** | Without an anchor back to each original, knowledge fragments across entity/concept pages and you lose "what did this article actually say?" |
 | **`index.md` / `log.md` / `review.md`** | The ledger. Index = what exists; Log = what happened (audit trail); Review = what needs you. Together they make the wiki self-describing and safe to automate. |
-| **`profile/` (second-brain only)** | Your cognitive fingerprint. Assistants read it to write in your voice, respect your priorities, and align to your goals. It is *static identity*, not accumulated knowledge — that's why it's not in `wiki/`. |
+| **`profile/` (second-brain only)** | Your cognitive fingerprint. Assistants read it to write in your voice, respect your priorities, and align to your goals. It is *static identity*, not accumulated knowledge â€” that's why it's not in `wiki/`. |
 | **`initiatives/ deliverables/ records/ artifacts/`** | Not everything is wiki synthesis. Formal docs, signed copies, and tracked projects have their own lifecycle and shouldn't be ingested as wiki pages. |
-| **`personal/` (people / areas / goals / calendar)** | The life-management layer — Personal CRM + PARA Areas + goals + key dates. Operational living docs, *not* wiki synthesis, so they're edited directly and the wiki links to them rather than ingesting them. **Consumer-generic by design** (friends/family/contacts; `person` = birthday/relationship/met). It's a **peer zone** built to coexist collision-free with a separate professional vault's own zone — two peer zones, zero shared paths, never merged into one. |
+| **`personal/` (people / areas / goals / calendar)** | The life-management layer â€” Personal CRM + PARA Areas + goals + key dates. Operational living docs, *not* wiki synthesis, so they're edited directly and the wiki links to them rather than ingesting them. **Consumer-generic by design** (friends/family/contacts; `person` = birthday/relationship/met). It's a **peer zone** built to coexist collision-free with a separate professional vault's own zone â€” two peer zones, zero shared paths, never merged into one. |
 | **`raw/processed/`** | After ingest, sources move here. Absence from the live buckets is a filesystem-level dedup signal (the manifest is the content-level one); the periodic ingest never rescans it. |
 | **`daily/index.md` + `daily/review.md`** | The journal's pointer + triage. Index = scannable one-liners for pattern detection; review = the reclassification queue where default-routed ambiguous captures are logged for one-tap correction. |
-| **`daily/` — one shared note** | A single low-friction capture surface for work *and* personal. The user never pre-sorts; synthesis reads the note and routes each fragment to the right zone. The note stays as the dated record. |
+| **`daily/` â€” one shared note** | A single low-friction capture surface for work *and* personal. The user never pre-sorts; synthesis reads the note and routes each fragment to the right zone. The note stays as the dated record. |
 | **`projects/` + `scratch/` at the root, ignored** | Code and throwaway are not knowledge. Keeping them in the vault is convenient (one folder for everything) but hiding them from Obsidian + git keeps the graph and history clean. |
-| **`research/` at the root, visible** | The workshop where investigation happens per-project. Each project is self-contained (`raw/`, `notes/`, `findings.md`). Findings get **promoted** into the wiki when ready — `research/` is the working bench; the wiki is the finished shelf. It is *not* a fifth knowledge zone; it's a staging area with a one-way gate into `*/wiki/pages/`. |
+| **`research/` at the root, visible** | The workshop where investigation happens per-project. Each project is self-contained (`raw/`, `notes/`, `findings.md`). Findings get **promoted** into the wiki when ready â€” `research/` is the working bench; the wiki is the finished shelf. It is *not* a fifth knowledge zone; it's a staging area with a one-way gate into `*/wiki/pages/`. |
 | **`.vault/` state** | Dedup + queue state lives outside the knowledge so it can be machine-managed without cluttering the graph. |
 
 ### 3.3 Content layers at a glance
@@ -198,19 +198,19 @@ wiki/
 | Code workspace | `projects/` | No | On demand |
 | Throwaway | `scratch/` | No | No |
 
-The model is **workshop → library**: `research/` and `projects/` are the workshop (visible and
+The model is **workshop â†’ library**: `research/` and `projects/` are the workshop (visible and
 readable, but uncompiled); `*/wiki/pages/` is the library. **Promotion** is the one-way,
 frontmatter-driven gate that graduates workshop findings into wiki pages.
 
 ### 3.4 Frontmatter at a glance
 
 Every file with structured metadata uses YAML frontmatter (`---` fences). The full schemas are in
-§5; the style contract in brief:
+Â§5; the style contract in brief:
 
-- **Spaces only** — never tabs. Valid YAML.
-- **`type:` discriminator** — tells agents/Dataview what kind of file this is.
-- **Tags as a block list** — `tags:\n  - foo` (never inline CSV).
-- **Timestamps** — single-quoted ISO-8601 UTC: `created: '2026-06-08T16:00:00Z'`.
+- **Spaces only** â€” never tabs. Valid YAML.
+- **`type:` discriminator** â€” tells agents/Dataview what kind of file this is.
+- **Tags as a block list** â€” `tags:\n  - foo` (never inline CSV).
+- **Timestamps** â€” single-quoted ISO-8601 UTC: `created: '2026-06-08T16:00:00Z'`.
 - **Control tags** live in the `tags:` list with a `vault:` prefix: `vault:pin` (keep forever),
   `vault:skip` (never ingest), `vault:promote` (eligible for promotion into the wiki).
 
@@ -220,13 +220,13 @@ Kit skills live in **real category folders**: `toolkit/skills/<NN-category>/<nam
 
 | # | Category | Status | Holds |
 |---|---|---|---|
-| 01 | `01-foundations` | active | `vault-init`, `obsidian-setup`, `profile-build`, `pokevault-update` |
+| 01 | `01-foundations` | active | `vault-init`, `obsidian-setup`, `profile-build`, `kiban-update` |
 | 02 | `02-research` | active | `research-init`, `research-promote` |
-| 03 | `03-communication` | reserved | — |
-| 04 | `04-project-management` | reserved | — |
-| 05 | `05-development` | reserved | — |
-| 06 | `06-design` | reserved | — |
-| 07 | `07-authoring` | reserved | — |
+| 03 | `03-communication` | reserved | â€” |
+| 04 | `04-project-management` | reserved | â€” |
+| 05 | `05-development` | reserved | â€” |
+| 06 | `06-design` | reserved | â€” |
+| 07 | `07-authoring` | reserved | â€” |
 | 08 | `08-knowledge` | active | `wiki-ingest`, `wiki-lint`, `daily-note` |
 
 Conventions:
@@ -234,10 +234,10 @@ Conventions:
 - **Numbers are stable; never renumber.** Reserved categories get a folder only when first used.
 - **Naming:** `{area}-{action}` (e.g., `wiki-ingest`, `research-promote`).
 - **Identity:** file name == skill `name:` frontmatter == wired `.claude/skills/<name>/` folder.
-- **`version` (semver) lives in frontmatter** — the authoritative datapoint for invoke/update/cleanup.
+- **`version` (semver) lives in frontmatter** â€” the authoritative datapoint for invoke/update/cleanup.
   Versions never appear in file or folder names. `category:` must equal the folder the skill lives in.
 - **Categories organize the source tree only; they do NOT propagate to runtimes.** The bootstrap
-  flatten preserves the flat `.claude/skills/<name>/SKILL.md` contract every non-Quick tool expects.
+  flatten preserves the flat `.claude/skills/<name>/SKILL.md` contract every tool expects.
 
 ---
 
@@ -250,38 +250,38 @@ The vault ships a pre-seeded `.obsidian/` so it behaves correctly the moment you
 | Setting | Value | Why |
 |---|---|---|
 | `newLinkFormat` | `absolute` | Cross-zone wikilinks (`[[work/wiki/pages/entities/acme-corp]]`) resolve correctly. Shortest-path links break across deep folders. |
-| `useMarkdownLinks` | `false` | Use `[[wikilinks]]`, not `[md](paths)` — wikilinks survive file moves and power the graph. |
+| `useMarkdownLinks` | `false` | Use `[[wikilinks]]`, not `[md](paths)` â€” wikilinks survive file moves and power the graph. |
 | `alwaysUpdateLinks` | `true` | Renames/moves update inbound links automatically. |
 | `userIgnoreFilters` | `["projects/","scratch/",".vault/"]` | Hides non-knowledge folders from the file explorer, search, and graph. |
 | `attachmentFolderPath` | `./` | New attachments land next to the note; for wiki media prefer dropping into `raw/media/`. |
 
-`.obsidian/` itself and any dotfolder (`.vault/`) are auto-hidden by Obsidian — you don't need to
+`.obsidian/` itself and any dotfolder (`.vault/`) are auto-hidden by Obsidian â€” you don't need to
 list them, but `.vault/` is included in the ignore filter for older Obsidian versions.
 
 ### 4.2 Plugins
 
-**Core (built-in, enabled in `core-plugins.json` — no install needed):**
+**Core (built-in, enabled in `core-plugins.json` â€” no install needed):**
 Daily Notes, Templates, Graph, Backlinks, Outgoing Links, Tag pane, Properties, Quick Switcher,
 Search, Outline, Page Preview, File Recovery.
 
-**Community (recommended; you must install via Settings → Community plugins — Obsidian's security
+**Community (recommended; you must install via Settings â†’ Community plugins â€” Obsidian's security
 model requires consent):**
 
 | Plugin | Why |
 |---|---|
-| **Dataview** | Query frontmatter — list pages by `level`, `confidence`, `sources_count`, `tags`. The wiki's structured frontmatter is built for this. |
+| **Dataview** | Query frontmatter â€” list pages by `level`, `confidence`, `sources_count`, `tags`. The wiki's structured frontmatter is built for this. |
 | **Templater** | Richer templates than core (dynamic dates, prompts) for pages and daily notes. |
 | **Tag Wrangler** | Rename/merge tags safely, including the `vault:` control tags. |
 | **Periodic Notes** | Weekly/monthly/quarterly notes layered on top of core Daily Notes (see File B). |
 
-**Browser (optional):** the Obsidian **Web Clipper** extension — clip articles straight into
+**Browser (optional):** the Obsidian **Web Clipper** extension â€” clip articles straight into
 `second-brain/wiki/raw/inbox/`.
 
 ### 4.3 Daily Notes (wired now)
 
 `.obsidian/daily-notes.json` points new daily notes at `daily/`, names them `YYYY-MM-DD`, and
 applies `daily/_templates/daily.md`. Today's note is one hotkey away. The template includes a
-**Capture → wiki** section so daily notes feed the ingest pipeline (File B §daily notes).
+**Capture â†’ wiki** section so daily notes feed the ingest pipeline (File B Â§daily notes).
 
 ---
 
@@ -300,21 +300,21 @@ have different **fields**.
     - knowledge
     - migration
   ```
-- **Timestamps:** ISO-8601 UTC, single-quoted, `Z` suffix — `created: '2026-06-08T16:00:00Z'`.
+- **Timestamps:** ISO-8601 UTC, single-quoted, `Z` suffix â€” `created: '2026-06-08T16:00:00Z'`.
 - **Strings:** unquoted unless they contain YAML specials (`:`, `#`, leading `[`/`{`). Quote when
-  needed — `title: "Acme Corp: Q3 review"`.
+  needed â€” `title: "Acme Corp: Q3 review"`.
 - `null` for an intentionally-empty scalar; `[]` / `{}` for empty collections.
 - On merge/update: **lists replace, maps merge, scalars replace.** `tags` are union-merged
   (case-insensitive dedup) so user tags survive re-ingest.
 
 #### Control tags
 Two namespaced tags let you steer the engine:
-- `vault:pin` — always keep this page/section; never auto-refresh or consolidate it away.
-- `vault:skip` — never ingest/refresh from this source.
+- `vault:pin` â€” always keep this page/section; never auto-refresh or consolidate it away.
+- `vault:skip` â€” never ingest/refresh from this source.
 
 ### 5.2 Wiki page frontmatter (`pages/**`)
 
-The full schema and field rules live in `AGENTS.md` §5 (it's the agent-facing contract). Summary:
+The full schema and field rules live in `AGENTS.md` Â§5 (it's the agent-facing contract). Summary:
 
 ```yaml
 ---
@@ -342,7 +342,7 @@ definition must be identical across every tool** or dedup/edit-detection silentl
 
 ### 5.3 Raw source frontmatter (`raw/**`)
 
-Sources you drop in can be plain Markdown with no frontmatter — the engine still ingests them. When
+Sources you drop in can be plain Markdown with no frontmatter â€” the engine still ingests them. When
 you (or a capture tool) add frontmatter, use this generic shape:
 
 ```yaml
@@ -356,7 +356,7 @@ tags: []
 ```
 
 > Note: the original (internal) system carried export-tool-specific fields (notebook/section/page
-> IDs). Those are intentionally **not** part of the portable standard — keep raw frontmatter generic
+> IDs). Those are intentionally **not** part of the portable standard â€” keep raw frontmatter generic
 > so any capture source fits.
 
 ### 5.4 Profile frontmatter (`second-brain/profile/**`)
@@ -391,7 +391,7 @@ These follow the general style with their own fields and do **not** use the `zon
 ### 5.7 Personal-zone frontmatter (`personal/**`)
 
 ```yaml
-# person — personal/people/<Full Name>.md
+# person â€” personal/people/<Full Name>.md
 type: person
 name: "Full Name"
 relationship: friend|family|colleague|mentor|network
@@ -402,9 +402,9 @@ tags: [person]
 ```
 
 Other personal types (full templates in `personal/_templates/`):
-- **area** — `personal/areas/<area>.md`: `type: area`, `status`, `review`
-- **goal** — `personal/goals/<goal>.md`: `type: goal`, `status`, `horizon`, `target_date`, `area`
-- **event** — `personal/calendar/<event>.md`: `type: event`, `date`, `recurring`, `remind_before`
+- **area** â€” `personal/areas/<area>.md`: `type: area`, `status`, `review`
+- **goal** â€” `personal/goals/<goal>.md`: `type: goal`, `status`, `horizon`, `target_date`, `area`
+- **event** â€” `personal/calendar/<event>.md`: `type: event`, `date`, `recurring`, `remind_before`
 
 Date fields (`birthday`, `date`) power the `personal/calendar/upcoming.md` Dataview dashboard.
 
@@ -412,7 +412,7 @@ Date fields (`birthday`, `date`) power the `personal/calendar/upcoming.md` Datav
 
 ## 6. Anti-forgetting rules (the trust contract)
 
-Reproduced from `AGENTS.md` §4 because they are the soul of the system. Every assistant operation
+Reproduced from `AGENTS.md` Â§4 because they are the soul of the system. Every assistant operation
 obeys all seven:
 
 1. **Append, don't rewrite.** New info goes in dated sections; existing content is preserved.
@@ -427,16 +427,16 @@ obeys all seven:
 
 ## 7. Ingest, query & cross-zone flow (summary)
 
-Full workflow is in `AGENTS.md` (§2 ingest, §6 query, §8 cross-zone). The shape:
+Full workflow is in `AGENTS.md` (Â§2 ingest, Â§6 query, Â§8 cross-zone). The shape:
 
 ```
-drop source → fingerprint/dedup → extract fragments → route (entities/concepts/synthesis/references)
-→ search-before-create → triage report (pause if >3 fragments or contradictions)
-→ write source summary → write/append fragment pages → update index → append log → mark manifest
+drop source â†’ fingerprint/dedup â†’ extract fragments â†’ route (entities/concepts/synthesis/references)
+â†’ search-before-create â†’ triage report (pause if >3 fragments or contradictions)
+â†’ write source summary â†’ write/append fragment pages â†’ update index â†’ append log â†’ mark manifest
 ```
 
 **Cross-zone:**
-- **Cognitive extraction (Work → Second Brain):** recurring patterns and decision frameworks from
+- **Cognitive extraction (Work â†’ Second Brain):** recurring patterns and decision frameworks from
   `work/` are appended to `second-brain/profile/patterns.md`. Insight flows; raw data does not.
 - **Linking:** entities have one canonical home; other zones reference via relative wikilink.
 - **Privacy guardrail (extensible):** if you add a shared zone later, content from `second-brain/`
@@ -446,15 +446,15 @@ drop source → fingerprint/dedup → extract fragments → route (entities/conc
 
 ## 8. Hygiene conventions
 
-- **`_archive/`** — nothing is deleted; stale raw and pre-consolidation page versions move to
+- **`_archive/`** â€” nothing is deleted; stale raw and pre-consolidation page versions move to
   `_archive/` (with `YYYY/` subdirs). Pages keep pointers to archived sources.
-- **`log.md`** — the audit trail. Every ingest, lint, and consolidation is logged. Append-only.
-- **`review.md`** — the attention queue. Contradictions, near-duplicates, uncertain routing, and
+- **`log.md`** â€” the audit trail. Every ingest, lint, and consolidation is logged. Append-only.
+- **`review.md`** â€” the attention queue. Contradictions, near-duplicates, uncertain routing, and
   consolidation proposals land here. You resolve and remove; resolutions are logged.
-- **Lint** — periodic health pass (after ~10 ingests or monthly): orphan pages, stale index
+- **Lint** â€” periodic health pass (after ~10 ingests or monthly): orphan pages, stale index
   entries, broken wikilinks, near-duplicates, unresolved contradictions, pending backlog,
   low-confidence aging, missing frontmatter, consolidation candidates.
-- **Consolidation** — the *one* exception to "append, don't rewrite." When a page hits 5+ dated
+- **Consolidation** â€” the *one* exception to "append, don't rewrite." When a page hits 5+ dated
   update sections it's rewritten as fresh synthesis, but only with: archived prior version, user
   approval, all sources preserved, and a **mandatory diff log** of what was preserved vs. dropped.
   Without the diff log, consolidation becomes the forgetting we exist to prevent.
@@ -463,7 +463,7 @@ drop source → fingerprint/dedup → extract fragments → route (entities/conc
 
 ## 9. Git & backup
 
-The vault is plain files, so `git init` gives you free page history, branching, and rollback —
+The vault is plain files, so `git init` gives you free page history, branching, and rollback â€”
 the simplest possible anti-forgetting safety net.
 
 `vault/.gitignore` (shipped) tracks knowledge + shared Obsidian config and ignores: OS cruft,
@@ -471,8 +471,8 @@ Obsidian volatile state (`workspace.json`, cache, `.trash`), per-machine plugin 
 content of `projects/` and `scratch/` (keeping their pointer READMEs).
 
 Recommended: commit after meaningful ingests, or let a scheduled assistant commit daily. If you
-also use Obsidian Sync, git is your durable history; Sync is your live cross-device mirror — they
-coexist fine as long as the vault isn't *also* in a cloud-sync folder (see §2).
+also use Obsidian Sync, git is your durable history; Sync is your live cross-device mirror â€” they
+coexist fine as long as the vault isn't *also* in a cloud-sync folder (see Â§2).
 
 ---
 
@@ -494,21 +494,21 @@ assistant that can read and write files in this folder is a valid wiki maintaine
 
 | Term | Meaning here | Industry grounding |
 |---|---|---|
-| **Knowledge Vault** | This folder structure; works standalone or with Obsidian | — |
+| **Knowledge Vault** | This folder structure; works standalone or with Obsidian | â€” |
 | **Obsidian vault** | The generic Obsidian concept (any folder Obsidian opens) | Obsidian |
 | **Zone** | A privacy-bounded subdivision of the vault (second-brain / work / personal / toolkit) | trust zones |
 | **Personal zone** | Hybrid life-management layer: CRM + areas + goals + calendar, plus a personal-life wiki | PARA + Personal CRM |
 | **Personal CRM** | One file per person; relationships, networking, birthdays, interaction log | personal CRM |
-| **Area** | An ongoing life domain with no end date (health, finances, hobbies…) | PARA (Tiago Forte) |
+| **Area** | An ongoing life domain with no end date (health, finances, hobbiesâ€¦) | PARA (Tiago Forte) |
 | **Journal / daily note** | The single shared daily capture surface; routed to zones by synthesis | 3-pillar (Wiki/CRM/Journal) |
 | **Wiki** | The LLM-maintained, compiled knowledge layer (Karpathy pattern) | Karpathy LLM Wiki |
-| **Raw** | Immutable source inputs | — |
+| **Raw** | Immutable source inputs | â€” |
 | **Page** | A compiled synthesis artifact | wiki |
-| **Source summary** | One page per ingested source | — |
+| **Source summary** | One page per ingested source | â€” |
 | **Profile** | Static identity files that personalize assistants | "second brain" PKM |
 | **Skill** | A reusable instruction file an assistant can follow | Alexa/agent skills |
-| **Control tag** | `vault:pin` / `vault:skip` steering tags | — |
-| **PokeVault** | This portable kit (the project that ships the vault + docs + skills) | — |
+| **Control tag** | `vault:pin` / `vault:skip` steering tags | â€” |
+| **Kiban** | This portable kit (the project that ships the vault + docs + skills) | â€” |
 
 ---
 
@@ -516,12 +516,12 @@ assistant that can read and write files in this folder is a valid wiki maintaine
 
 On a fresh machine with nothing but this file:
 
-1. Create `~/PokeVault/` and the tree in §3 (or run the `vault-init` skill in `skills/`).
+1. Create `~/Kiban/Vault/` and the tree in Â§3 (or run the `vault-init` skill in `skills/`).
 2. Drop in `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, `README.md`.
-3. Seed `.obsidian/` (§4) and `.vault/` (config + empty `manifest.json`/`pending.json` per zone).
+3. Seed `.obsidian/` (Â§4) and `.vault/` (config + empty `manifest.json`/`pending.json` per zone).
 4. Seed each `wiki/` with `index.md`, `log.md`, `review.md` and the empty `raw/`+`pages/` buckets.
 5. Seed `second-brain/profile/` with the 7 stubs; replace `[OWNER]` / `[INSTALL_DATE]`.
-6. Open `~/PokeVault/` in Obsidian; install the recommended community plugins; verify link settings.
+6. Open `~/Kiban/Vault/` in Obsidian; install the recommended community plugins; verify link settings.
 7. Point your AI assistant at `AGENTS.md` and drop your first source into a `raw/inbox/`.
 
 That's the whole system. Everything after that is just feeding it.

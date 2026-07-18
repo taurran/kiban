@@ -32,9 +32,9 @@ Why this fits a personal/work knowledge base:
 - **It's portable.** No vector DB, no server. Obsidian renders the graph for free.
 - **It degrades gracefully.** If automation disappears, you still have a clean human wiki.
 
-### 1.2 How PokeVault implements it
+### 1.2 How Kiban implements it
 
-| Pattern element | PokeVault realization |
+| Pattern element | Kiban realization |
 |---|---|
 | Raw drop directory | `*/wiki/raw/{inbox,meetings,notes,media}/` (immutable) |
 | Processed marker (dedup-by-absence) | `*/wiki/raw/processed/` — sources move here after ingest |
@@ -279,7 +279,7 @@ and maintainable by anyone, not tied to any one organization's internal conventi
 **Obsidian vault organization**
 - PARA (Tiago Forte: Projects / Areas / Resources / Archive) and Zettelkasten influence the
   separation of *actionable* (work `initiatives/`, `deliverables/`) from *reference* (the wiki) and
-  *archive* (`_archive/`). PokeVault uses zones + a compiled wiki rather than strict PARA, but the
+  *archive* (`_archive/`). Kiban uses zones + a compiled wiki rather than strict PARA, but the
   actionability ladder is the same instinct.
 - Community guidance on folders-vs-tags-vs-links: prefer links + properties for relationships, use
   folders for coarse separation, avoid deep nesting. Reflected in the shallow zone/wiki layout and
