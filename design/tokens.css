@@ -1,0 +1,118 @@
+/**
+ * Kiban Design Tokens
+ * Source of truth for all Kiban visual values.
+ * Sibling system to Kagami (C:\Dev\kagami\design\tokens.css)
+ * Last updated: 2026-04-26
+ */
+
+:root {
+  /* ─── Colors: Primary (Dark Slate Palette) ─── */
+  --slate-deep:      #151B2E;  /* Primary dark surface, deep foundation */
+  --slate:           #1E2640;  /* Secondary surface, elevated panels */
+  --slate-mid:       #2A3350;  /* Borders on dark, subtle separators */
+  --slate-light:     #3A4560;  /* Hover state on dark surfaces */
+
+  /* ─── Colors: Accent ─── */
+  --teal:            #2D7D6F;  /* Primary accent — action, links, active states */
+  --teal-light:      #3D9B8B;  /* Hover state for teal accent */
+  --teal-dim:        #1F5C52;  /* Pressed / deep teal */
+  --silver:          #8FA3B4;  /* Muted accent, metadata, secondary elements */
+  --silver-light:    #B8CCDA;  /* Light silver — captions, disabled */
+
+  /* ─── Colors: Surface (Light Mode) ─── */
+  --surface-light:   #F2F5F8;  /* Light mode primary surface */
+  --surface-mid:     #E8EDF2;  /* Secondary surface, elevated cards */
+  --surface-deep:    #DDE4EB;  /* Deeply elevated or active card */
+  --border-light:    #D0D8E0;  /* Light mode borders */
+  --border-focus:    #2D7D6F;  /* Focus ring — teal */
+
+  /* ─── Colors: Text ─── */
+  --text:            #1A1F2E;  /* Primary text (light mode) — rich dark slate */
+  --text-sub:        #5A6578;  /* Secondary / muted text */
+  --text-disabled:   #9AAAB8;  /* Disabled states */
+  --text-on-dark:    #E8EDF2;  /* Text on dark slate surfaces */
+  --text-on-dark-sub:#8FA3B4;  /* Muted text on dark */
+
+  /* ─── Colors: Logo ─── */
+  --logo-primary:    #1E2640;  /* Primary logo mark on white */
+  --logo-accent:     #2D7D6F;  /* Accent layer (teal substrate line) */
+  --logo-reverse:    #E8EDF2;  /* Logo reversed on dark backgrounds */
+
+  /* ─── Colors: Semantic ─── */
+  --color-success:   #2D7D6F;  /* Maps to --teal */
+  --color-warning:   #B8922A;  /* Warm amber — distinct from Kagami's gold */
+  --color-error:     #C44040;  /* Red — universal */
+  --color-info:      #3A4560;  /* Slate mid */
+
+  /* ─── Colors: Layer System (Architecture Visualization) ─── */
+  --layer-1:         #2D7D6F;  /* Universal Config — teal (most active, top layer) */
+  --layer-2:         #3A4560;  /* Tool Adapters */
+  --layer-3:         #2A3350;  /* Vaults */
+  --layer-4:         #1E2640;  /* Project overrides — deepest, most foundational */
+
+  /* ─── Typography ─── */
+  --font-display:    'DM Mono', 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  --font-body:       'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-code:       'DM Mono', 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Type scale — matches Kagami for interoperability */
+  --text-display:    clamp(48px, 6vw, 72px);
+  --text-h1:         36px;
+  --text-h2:         28px;
+  --text-h3:         22px;
+  --text-h4:         18px;
+  --text-body:       16px;
+  --text-small:      14px;
+  --text-xs:         12px;
+  --text-code:       14px;
+
+  --leading-tight:   1.2;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.75;
+  --leading-code:    1.6;
+
+  /* ─── Spacing — shared scale with Kagami ─── */
+  --space-xs:    4px;
+  --space-sm:    8px;
+  --space-md:    16px;
+  --space-lg:    24px;
+  --space-xl:    40px;
+  --space-2xl:   64px;
+  --space-3xl:   96px;
+
+  /* ─── Border Radius ─── */
+  --radius-xs:   2px;   /* More angular than Kagami — infrastructure feel */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   20px;
+  --radius-full: 9999px;
+
+  /* ─── Shadows ─── */
+  --shadow-sm:   0 1px 3px rgba(21, 27, 46, 0.10);
+  --shadow-md:   0 4px 12px rgba(21, 27, 46, 0.14);
+  --shadow-lg:   0 8px 24px rgba(21, 27, 46, 0.18);
+  --shadow-teal: 0 4px 16px rgba(45, 125, 111, 0.24);
+
+  /* ─── Motion — same principles as Kagami ─── */
+  --ease-default:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:      cubic-bezier(0, 0, 0.2, 1);
+  --ease-in:       cubic-bezier(0.4, 0, 1, 1);
+
+  --duration-fast:   150ms;
+  --duration-normal: 250ms;
+  --duration-slow:   400ms;
+
+  /* ─── Z-Index ─── */
+  --z-base:      0;
+  --z-raised:    10;
+  --z-dropdown:  100;
+  --z-sticky:    200;
+  --z-overlay:   300;
+  --z-modal:     400;
+  --z-toast:     500;
+
+  /* ─── Layout ─── */
+  --max-width-content: 720px;
+  --max-width-wide:    1080px;
+}
