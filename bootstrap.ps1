@@ -1,7 +1,7 @@
-# PokeVault bootstrap (Windows PowerShell)
+# Kiban bootstrap (Windows PowerShell)
 # Installs the vault and wires its skills into your coding agent(s).
 #
-#   .\bootstrap.ps1 [-VaultRoot <path>]   # default: C:\PokeVault
+#   .\bootstrap.ps1 [-VaultRoot <path>]   # default: $env:USERPROFILE\Kiban\Vault
 #
 # Safe + idempotent: never overwrites your knowledge. Re-run anytime to resync skills.
 #
@@ -12,11 +12,11 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $Pkg = Split-Path -Parent $MyInvocation.MyCommand.Path
-# Default to a LOCAL drive-root folder, deliberately NOT under %USERPROFILE%\Documents
+# Default to %USERPROFILE%\Kiban\Vault, deliberately NOT under %USERPROFILE%\Documents
 # (which is often redirected into OneDrive — two sync engines on one vault cause conflicts).
-$DefaultVault = Join-Path $env:SystemDrive 'PokeVault'
+$DefaultVault = Join-Path $env:USERPROFILE 'Kiban\Vault'
 
-Write-Host "PokeVault bootstrap"
+Write-Host "Kiban bootstrap"
 Write-Host "  package : $Pkg`n"
 
 # Choose the install location. -VaultRoot always wins. Otherwise, when run interactively,
@@ -34,7 +34,7 @@ if (-not $VaultRoot) {
 Write-Host "  vault   : $VaultRoot`n"
 
 # 1) Place the vault on first run; never clobber an existing one.
-#    Default location: C:\PokeVault
+#    Default location: $env:USERPROFILE\Kiban\Vault
 if (-not (Test-Path $VaultRoot)) {
   if (Test-Path (Join-Path $Pkg 'vault')) {
     Write-Host "-> creating vault at $VaultRoot"

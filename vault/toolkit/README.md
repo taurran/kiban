@@ -19,7 +19,7 @@ folder only when first used.
 
 | Category | Kit skills |
 |---|---|
-| `01-foundations/` | `vault-init`, `obsidian-setup`, `profile-build`, `pokevault-update` |
+| `01-foundations/` | `vault-init`, `obsidian-setup`, `profile-build`, `kiban-update` |
 | `02-research/` | `research-init`, `research-promote` |
 | `08-knowledge/` | `wiki-ingest`, `wiki-lint`, `daily-note` |
 
@@ -30,10 +30,10 @@ propagate to runtimes.** The bootstrap flattens every skill to `.claude/skills/<
 
 ## Relationship to the shipped kit
 
-The PokeVault kit ships its reference skills in the package's top-level `skills/<NN-category>/`
+The Kiban kit ships its reference skills in the package's top-level `skills/<NN-category>/`
 folders; the bootstrap installs them here (categorized) and wires the flat runtime bindings.
 Copy any of them elsewhere in `toolkit/` to customize — your copies are never overwritten by a
-PokeVault update (kit-owned files in the category folders are resynced by the bootstrap).
+Kiban update (kit-owned files in the category folders are resynced by the bootstrap).
 
 ## Distribution
 

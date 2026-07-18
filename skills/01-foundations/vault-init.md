@@ -2,12 +2,12 @@
 name: vault-init
 version: "1.0.0"
 category: 01-foundations
-description: "Scaffold a fresh PokeVault knowledge vault on this machine — folders, engine files, .obsidian config, .vault state, profile stubs, and wiki seeds. Idempotent. Use on a new machine or to repair a partial vault."
+description: "Scaffold a fresh Kiban knowledge vault on this machine — folders, engine files, .obsidian config, .vault state, profile stubs, and wiki seeds. Idempotent. Use on a new machine or to repair a partial vault."
 trigger: "initialize my vault"
 when_to_use: "First-time setup on a new machine, or to re-create any missing structural files without disturbing existing content."
 inputs:
   - name: vault_root
-    description: "Where to create the vault. Default ~/PokeVault (macOS/Linux) or C:\PokeVault (Windows)."
+    description: "Where to create the vault. Default ~/Kiban/Vault (macOS/Linux) or $env:USERPROFILE\\Kiban\\Vault (Windows)."
     required: false
   - name: owner
     description: "Your name; substituted for [OWNER] in seeded files."
@@ -22,7 +22,7 @@ only creates what's missing. Safe to re-run.
 
 ### Steps
 
-1. **Resolve root.** Use `vault_root` or default `~/PokeVault`. Resolve `~`/`%USERPROFILE%`.
+1. **Resolve root.** Use `vault_root` or default `~/Kiban/Vault`. Resolve `~`/`%USERPROFILE%`.
 2. **Idempotency check.** If `<root>/.vault/config.yaml` exists, this is a repair run: preserve
    everything; only create missing files/folders. Otherwise a fresh build.
 3. **Create folders** (no-op if present) from the blueprint:
@@ -38,7 +38,7 @@ only creates what's missing. Safe to re-run.
    (today, ISO-8601 UTC).
 5. **Write `.obsidian/`** config (skip if present): `app.json`, `core-plugins.json`,
    `community-plugins.json`, `daily-notes.json`, `templates.json` (values per blueprint §4).
-   **Obsidian is PokeVault's first-class surface — this wiring is part of init, not an optional
+   **Obsidian is Kiban's first-class surface — this wiring is part of init, not an optional
    add-on.** It enables core Daily Notes → `daily/`, Templates, and absolute wikilinks out of the box.
 6. **Write `.vault/`** state (skip if present): `config.yaml` (stamp `created`), and per zone
    `state/<zone>/manifest.json` = `{}`, `pending.json` = `[]`.

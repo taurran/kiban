@@ -1,6 +1,6 @@
-# Installing PokeVault
+# Installing Kiban
 
-PokeVault is plain files. "Installing" means: put the `vault/` folder where you want it, open it in
+Kiban is plain files. "Installing" means: put the `vault/` folder where you want it, open it in
 Obsidian, install a few plugins, and tell your AI assistant where the schema is. 10 minutes.
 
 ---
@@ -19,37 +19,37 @@ Obsidian, install a few plugins, and tell your AI assistant where the schema is.
 Pick a **local** location **outside** any cloud-sync folder (OneDrive / iCloud / Dropbox) if you plan to
 use Obsidian Sync or git (see §5) — two sync engines on one vault cause conflicts and corrupt `.obsidian`.
 
-- **Windows:** the bootstrap defaults to **`C:\PokeVault`** for exactly this reason — your `Documents`
-  folder is usually redirected into OneDrive. A drive-root local folder keeps the vault off the sync
-  engine and easy to find. (Pass `-VaultRoot <path>` if `C:\` is locked down on your machine.)
-- **macOS / Linux:** the default **`~/PokeVault`** sits in your home dir, not the iCloud-synced
+- **Windows:** the bootstrap defaults to **`$env:USERPROFILE\Kiban\Vault`** for exactly this reason — your `Documents`
+  folder is usually redirected into OneDrive. A local folder outside `Documents` keeps the vault off
+  the sync engine and easy to find. (Pass `-VaultRoot <path>` to install elsewhere.)
+- **macOS / Linux:** the default **`~/Kiban/Vault`** sits in your home dir, not the iCloud-synced
   `~/Documents`/`~/Desktop`, so it's safe as-is.
 
 **macOS / Linux**
 ```bash
-cp -R PokeVault/vault ~/PokeVault
+cp -R Kiban/vault ~/Kiban/Vault
 ```
 
 **Windows (PowerShell)**
 ```powershell
-Copy-Item -Recurse PokeVault\vault C:\PokeVault
+Copy-Item -Recurse Kiban\vault $env:USERPROFILE\Kiban\Vault
 ```
 
-The folder name (`PokeVault`) becomes the Obsidian vault display name. Rename if you like.
+The folder name (`Vault`) becomes the Obsidian vault display name. Rename if you like.
 
 > **Easiest path — one command (recommended).** Instead of copying by hand, run the bootstrap from
 > the unzipped package. It places the vault *and* wires the skills into your coding agent(s):
 >
 > ```bash
-> cd PokeVault && ./bootstrap.sh            # macOS / Linux
+> cd Kiban && ./bootstrap.sh            # macOS / Linux
 > ```
 > ```powershell
-> cd PokeVault; .\bootstrap.ps1             # Windows
+> cd Kiban; .\bootstrap.ps1             # Windows
 > ```
 >
 > Pass a path to install elsewhere: `./bootstrap.sh ~/Knowledge`. It's safe to re-run (idempotent) and
 > never overwrites your content. Or build from scratch with your assistant: open `skills/01-foundations/vault-init.md`
-> and say "initialize my vault at ~/PokeVault".
+> and say "initialize my vault at ~/Kiban/Vault".
 
 ---
 
@@ -67,7 +67,7 @@ has `created: null` — the `vault-init` skill stamps it on first run, or you ca
 
 ## 3. Open in Obsidian
 
-1. Launch Obsidian → **Open folder as vault** → select `~/PokeVault`.
+1. Launch Obsidian → **Open folder as vault** → select `~/Kiban/Vault`.
 2. The shipped `.obsidian/` config applies automatically (absolute links, ignore filters, Daily Notes).
 3. Install recommended **community plugins** (Settings → Community plugins → turn off **Restricted
    Mode**, then **Browse**). Obsidian requires you to install these yourself:
@@ -91,22 +91,22 @@ Point your assistant at the schema. It's the same schema for every tool — only
 
 | Tool | What to do |
 |---|---|
-| **Claude Code** | Open `~/PokeVault` as the project; it reads `CLAUDE.md` → `AGENTS.md`. |
-| **Cursor** | Open `~/PokeVault`; it reads `.cursorrules` → `AGENTS.md`. |
+| **Claude Code** | Open `~/Kiban/Vault` as the project; it reads `CLAUDE.md` → `AGENTS.md`. |
+| **Cursor** | Open `~/Kiban/Vault`; it reads `.cursorrules` → `AGENTS.md`. |
 | **Codex / OpenCode** | Reads `AGENTS.md` natively. |
-| **Desktop AI app / local LLM** | Add `~/PokeVault` as an indexed folder; tell it to read `AGENTS.md` first. |
+| **Desktop AI app / local LLM** | Add `~/Kiban/Vault` as an indexed folder; tell it to read `AGENTS.md` first. |
 
 ### How your skills are wired
 `bootstrap.sh` installs the kit's skills in two shapes so every tool can find them:
-- **Canonical source** — `~/PokeVault/toolkit/skills/<NN-category>/<name>.md` (plain Markdown, readable by any agent).
-- **Claude Code** — `~/PokeVault/.claude/skills/<name>/SKILL.md` (the open Agent-Skills format; one folder
+- **Canonical source** — `~/Kiban/Vault/toolkit/skills/<NN-category>/<name>.md` (plain Markdown, readable by any agent).
+- **Claude Code** — `~/Kiban/Vault/.claude/skills/<name>/SKILL.md` (the open Agent-Skills format; one folder
   per skill, `SKILL.md` singular). Claude auto-loads a skill when your request matches its
-  `description`. Just open `~/PokeVault` as the project.
+  `description`. Just open `~/Kiban/Vault` as the project.
 - **Codex / Cursor / Gemini / Aider / Windsurf / Zed** — these read `AGENTS.md` natively; the skill
   catalog + trigger phrases live in **AGENTS.md §11**, so the agent opens `toolkit/skills/<category>/<name>.md`
   on demand.
 - **Want skills available everywhere in Claude Code?** Copy the `<name>/` folders from
-  `~/PokeVault/.claude/skills/` to `~/.claude/skills/` (personal scope) instead of leaving them in-vault.
+  `~/Kiban/Vault/.claude/skills/` to `~/.claude/skills/` (personal scope) instead of leaving them in-vault.
 
 > Re-run `./bootstrap.sh` after any kit update to resync the `.claude/skills/` bindings.
 
@@ -123,14 +123,14 @@ Then test:
 (it uploads this vault); then on your phone or another machine, connect to the **same** remote and it
 **downloads** a copy. You never re-create the vault on the other device — it always flows out from here.
 
-- **Obsidian Sync / Syncthing / git:** keep the vault at `~/PokeVault`, **outside** OneDrive / iCloud /
+- **Obsidian Sync / Syncthing / git:** keep the vault at `~/Kiban/Vault`, **outside** OneDrive / iCloud /
   Dropbox / Google Drive. Two sync engines on the same files cause conflicts and corrupt `.obsidian`.
 - **Cloud-folder backup only (no cross-device editing):** a cloud folder is fine, but set the files
   to **"always keep on this device"** (Windows OneDrive: right-click → *Always keep on this device*;
   macOS iCloud: disable *Optimize Storage*) so Obsidian sees real local files.
 - **git (recommended either way):**
   ```bash
-  cd ~/PokeVault && git init && git add . && git commit -m "Initial vault"
+  cd ~/Kiban/Vault && git init && git add . && git commit -m "Initial vault"
   ```
   The shipped `.gitignore` tracks your knowledge + shared Obsidian config and ignores OS cruft,
   Obsidian workspace/cache, plugin binaries, and `projects/`/`scratch/` content.
@@ -142,8 +142,8 @@ Then test:
 
 ## 6. Updating later (without losing data)
 
-When a newer PokeVault release ships, you can deploy its improvements **into** your existing vault
-without disturbing your content. The rules are binding (`skills/01-foundations/pokevault-update.md`):
+When a newer Kiban release ships, you can deploy its improvements **into** your existing vault
+without disturbing your content. The rules are binding (`skills/01-foundations/kiban-update.md`):
 
 - **Overwritten** (with a backup to `.vault/_backup/<version>/`): the engine (`AGENTS.md`), harness
   pointers, shipped docs, and reference templates.
@@ -153,14 +153,14 @@ without disturbing your content. The rules are binding (`skills/01-foundations/p
 - **Added:** new structure and new config keys (merged, never overwriting your values).
 
 To update: get the new release, then tell your assistant **"update my vault from <release path>"**
-(runs `pokevault-update`: it dry-runs a plan, asks you to confirm, backs up, then applies). It's
+(runs `kiban-update`: it dry-runs a plan, asks you to confirm, backs up, then applies). It's
 idempotent — safe to re-run.
 
 ---
 
 ## Mobile (iOS & Android) — capture on the go, compile on desktop
 
-PokeVault compiles on a **computer** — that's where your AI assistant runs the ingest/synthesis.
+Kiban compiles on a **computer** — that's where your AI assistant runs the ingest/synthesis.
 Phones are the best **capture** device, so the mobile story is deliberately simple: **no app to
 install beyond Obsidian, no phone-side AI agent, nothing to sideload.**
 

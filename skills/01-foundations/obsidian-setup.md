@@ -12,7 +12,7 @@ harness_notes: "Mostly user-guided UI steps. Obsidian's security model requires 
 ## obsidian-setup
 
 ### 1. Open the vault
-Launch Obsidian → "Open folder as vault" → select `~/PokeVault` (Windows: `C:\PokeVault`).
+Launch Obsidian → "Open folder as vault" → select `~/Kiban/Vault` (Windows: `$env:USERPROFILE\Kiban\Vault`).
 The shipped `.obsidian/` config applies automatically.
 
 ### 2. Install recommended community plugins

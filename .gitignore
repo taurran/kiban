@@ -1,4 +1,4 @@
-# PokeVault repo .gitignore
+# Kiban repo .gitignore
 
 # OS cruft
 .DS_Store
@@ -21,3 +21,7 @@ HANDOFF.md
 
 # Release artifacts attach to GitHub Releases, not committed to the tree
 dist/
+
+# kata run-state (local only, never tracked)
+kata.config
+.kata/

@@ -6,7 +6,7 @@
 > desktop AI app) follows the same workflow described here.
 
 **Schema version:** 1.0
-**Vault kind:** PokeVault — a portable, Obsidian-native "Second Brain + LLM Wiki"
+**Vault kind:** Kiban — a portable, Obsidian-native "Second Brain + LLM Wiki"
 **Owner:** [OWNER]
 **Created:** [INSTALL_DATE]
 
@@ -37,27 +37,30 @@ Three layers, three rules:
 
 ## 1. Structure
 
-This vault contains four zones plus one shared daily note:
+This vault contains five zones plus one shared daily note:
 
 | Zone | Path | Purpose | Privacy |
 |---|---|---|---|
 | Second Brain | `second-brain/` | Cognitive fingerprint (who you are) + personal knowledge wiki | Private |
 | Work | `work/` | Engagement/project notes + work knowledge wiki | Private |
 | Personal | `personal/` | Life management — people (CRM), areas, goals, calendar + a personal-knowledge wiki | Private |
+| Professional | `professional/` | Professional life, growth, development, and goals — employer-independent | Private |
 | Toolkit | `toolkit/` | Your own skills (by category), agents, agent-sops (multi-step procedures), context files (no wiki) | Private |
 
 A single **daily note** at the vault root (`daily/`) is the shared capture surface for *both* work
 and personal — see "The single daily note" below.
 
-Zones are top-level folders inside the Obsidian vault root (`~/PokeVault/`). Also at the root:
+Zones are top-level folders inside the Obsidian vault root (`~/Kiban/Vault/`). Also at the root:
 `daily/` (the shared daily note + its template — **visible**; your journal/capture surface).
 `research/` (the **research workshop** — folder-per-project investigation; **visible**; findings are
 promoted into a wiki when ready, §8). Two more top-level folders are **not** knowledge and are
 excluded from Obsidian's search and graph (via `userIgnoreFilters`): `projects/` (code workspaces —
 excluded from the graph but **agent-readable on demand** and **promotable** via the `vault:promote`
-tag — §8) and `scratch/` (transient staging).
+tag — §8) and `scratch/` (transient staging). Two **operational zones** also sit at the root:
+`archive/` (agents archive here, never delete — §8) and `attachments/` (media home, one subfolder per
+zone — §8); both hold content but are not iterated by the wiki engine.
 
-Each zone with wiki capability (`second-brain`, `work`, `personal`) contains:
+Each zone with wiki capability (`second-brain`, `work`, `personal`, `professional`) contains:
 
 ```
 wiki/
@@ -510,6 +513,14 @@ Periodically (manually or via a scheduled assistant), extract decision patterns,
 and quality feedback from `work/` and APPEND them to `second-brain/profile/patterns.md`. This flows
 insight, not raw data.
 
+### professional/
+Route here: career goals, skills development, certifications, professional network and mentorship,
+conferences/reviews/professional travel, portfolio/brag material, job-search or venture content
+(propose the dormant folder first — see Folder Governance). Boundary: professional = your career,
+employer-independent. work/ = current-employer information only.
+Professional is a **hybrid zone** like `personal/` — operational growth folders, with `insights/` as its
+synthesis landing (the engine's wiki surface for this zone).
+
 ### Daily-note routing (work ⇄ personal)
 The single `daily/` note feeds both work and personal (see §1 "The single daily note"). Synthesis
 splits it by content; the user never pre-sorts. People → CRM, areas/goals/dates → `personal/`,
@@ -548,6 +559,22 @@ synced to a shared drive), treat it like the original design did: content from `
 `work/` MUST NOT be copied into a shared zone without explicit user confirmation. Publishing private
 notes is a deliberate act, never an automatic one.
 
+### Archival rule (applies to ALL agents)
+Never delete a note or folder. Retire it: move to `archive/` (projects whole; pages with a
+`superseded-by:` frontmatter link). Deletion is a human-only action.
+
+### Attachments rule
+Binaries (audio, images) go under `attachments/<zone>/`; notes link to them. Never store binaries
+inside knowledge zones.
+
+### Folder Governance (agent-created structure)
+Every folder you create MUST contain `_index.md` with frontmatter: `created-by: <agent>`,
+`kiban-managed: true`, and a one-line purpose. Free creation is allowed only under
+`insights/` and synthesis subtrees. Creating a zone-top-level folder requires a proposal entry
+in that zone's `pending.json` and human approval. Naming: kebab-case. Max depth below zone root: 2.
+Dormant registered types (see `.vault/config.yaml agent_folders.dormant_types`) should be PROPOSED
+when the user's context makes them relevant.
+
 ---
 
 ## 9. Tool Permissions
@@ -575,7 +602,7 @@ notes is a deliberate act, never an automatic one.
 > `docs/01-vault-blueprint.md` (ships alongside the vault, not inside it) adds rationale.
 
 ```
-# Vault root: ~/PokeVault/
+# Vault root: ~/Kiban/Vault/
 second-brain/profile/
 second-brain/initiatives/
 second-brain/artifacts/
@@ -598,6 +625,15 @@ personal/calendar/
 personal/_templates/
 personal/wiki/raw/{inbox,notes,media,processed,_archive}/
 personal/wiki/pages/{sources,entities,concepts,synthesis,references}/
+professional/goals/
+professional/areas/
+professional/people/
+professional/people/mentorship/
+professional/events/
+professional/growth/
+professional/portfolio/
+professional/portfolio/brand/
+professional/insights/       ← machine-written synthesis landing (this hybrid zone's wiki surface)
 daily/                       ← the single shared daily note (visible)
 daily/index.md               ← chronological journal index (pattern detection)
 daily/review.md              ← journal reclassification queue (defaulted routings)
@@ -607,6 +643,9 @@ research/index.md            ← active projects + ready-to-promote dashboard
 research/_templates/
 research/_archive/
 research/<project>/{README.md,raw/,notes/,findings.md}
+# Operational zones at root (hold content; not iterated by the wiki engine):
+archive/                     ← retirement home for finished projects (whole) + superseded pages (superseded-by: link); agents archive, never delete (§8)
+attachments/<zone>/          ← media home: binaries (audio, images) under a per-zone subfolder; notes link here (§8)
 # Top-level, outside the knowledge zones (excluded from Obsidian search/graph via userIgnoreFilters):
 projects/   ← code workspaces (agent-readable on demand; promotable via vault:promote)
 scratch/    ← transient staging
@@ -630,7 +669,7 @@ Any agent that reads this file can run one by opening its source file when you s
 | `vault-init` | `01-foundations` | "initialize my vault" | Scaffold or repair the vault structure (idempotent) |
 | `obsidian-setup` | `01-foundations` | "set up obsidian" | Install/verify plugins + link settings |
 | `profile-build` | `01-foundations` | "build my profile" | Populate the second-brain profile conversationally |
-| `pokevault-update` | `01-foundations` | "update my vault" | Apply a kit update non-destructively |
+| `kiban-update` | `01-foundations` | "update my vault" | Apply a kit update non-destructively |
 | `research-init` | `02-research` | "start research <name>" | Scaffold a new research project from the template |
 | `research-promote` | `02-research` | "promote research" / "promote this" | Compile a ready finding/component into the wiki (frontmatter-driven) |
 | `wiki-ingest` | `08-knowledge` | "process my inbox" | Compile raw sources into wiki pages (dedup, route, link, log) |

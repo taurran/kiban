@@ -1,26 +1,26 @@
 ---
-name: pokevault-update
+name: kiban-update
 version: "1.0.0"
 category: 01-foundations
-description: "Apply a newer PokeVault release into an existing ~/PokeVault WITHOUT disturbing user content. Updates the engine, docs, skills, and templates; adds new structure; merges new config keys; never touches knowledge, raw, profile, state, or user config values."
+description: "Apply a newer Kiban release into an existing ~/Kiban/Vault WITHOUT disturbing user content. Updates the engine, docs, skills, and templates; adds new structure; merges new config keys; never touches knowledge, raw, profile, state, or user config values."
 trigger: "update my vault"
-when_to_use: "When a new PokeVault version ships and you want its improvements deployed into a vault that already has your data."
+when_to_use: "When a new Kiban version ships and you want its improvements deployed into a vault that already has your data."
 inputs:
   - name: vault_root
-    description: "The live vault to update. Default ~/PokeVault."
+    description: "The live vault to update. Default ~/Kiban/Vault."
     required: false
   - name: release_path
-    description: "Path to the new PokeVault release (the kit's vault/ template + docs/ + skills/)."
+    description: "Path to the new Kiban release (the kit's vault/ template + docs/ + skills/)."
     required: false
 status: "SPEC — the executable skill is built and shipped with the release that needs it. This file is the binding contract that every future update obeys."
 harness_notes: "Must be idempotent. Must dry-run and report a plan before writing. Must back up overwritten engine files to .vault/_backup/<version>/ before replacing."
 ---
 
-## pokevault-update
+## kiban-update
 
 > **The non-destructive update contract.** Updates deploy *into* the vault. They add capability and
 > refresh shipped files. They **never** lose or alter your data. This contract is non-negotiable and
-> applies to every PokeVault release, forever.
+> applies to every Kiban release, forever.
 
 ### The update contract
 
@@ -54,7 +54,7 @@ the user can diff/restore.
 
 ### Procedure (idempotent)
 
-1. **Read versions.** Compare release `VERSION` to `.vault/config.yaml` `pokevault_version`.
+1. **Read versions.** Compare release `VERSION` to `.vault/config.yaml` `kiban_version`.
    If equal and no `--force`, report "already current" and stop.
 2. **Plan (dry-run first).** Produce a change plan: files to overwrite (with backup target), files
    to add, config keys to merge, new required prompts. **Show the plan; do not write yet.**
@@ -65,7 +65,7 @@ the user can diff/restore.
    each described in the release's migration notes / CHANGELOG. Record each migration in
    `.vault/migrations.log` (machine state) — **never** in a zone's knowledge `log.md`, which the
    updater treats as read-only.
-7. **Stamp.** Set `.vault/config.yaml` `pokevault_version` to the new version.
+7. **Stamp.** Set `.vault/config.yaml` `kiban_version` to the new version.
 8. **Report.** What was overwritten (and where the backup is), what was added, what config was
    merged, and anything that needs the user's attention.
 

@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
-# PokeVault bootstrap (macOS / Linux)
+# Kiban bootstrap (macOS / Linux)
 # Installs the vault and wires its skills into your coding agent(s).
 #
-#   ./bootstrap.sh [VAULT_ROOT]     # default: ~/PokeVault
+#   ./bootstrap.sh [VAULT_ROOT]     # default: ~/Kiban/Vault
 #
 # Safe + idempotent: never overwrites your knowledge. Re-run anytime to resync skills.
 set -euo pipefail
 
 PKG="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# Default to ~/PokeVault (home dir — NOT ~/Documents or ~/Desktop, which can be iCloud-synced).
-DEFAULT_VAULT="$HOME/PokeVault"
+# Default to ~/Kiban/Vault (home dir — NOT ~/Documents or ~/Desktop, which can be iCloud-synced).
+DEFAULT_VAULT="$HOME/Kiban/Vault"
 VAULT="${1:-}"
 
-echo "PokeVault bootstrap"
+echo "Kiban bootstrap"
 echo "  package : $PKG"
 echo
 
@@ -35,7 +35,7 @@ echo "  vault   : $VAULT"
 echo
 
 # 1) Place the vault on first run; never clobber an existing one.
-#    Default location: ~/PokeVault  (macOS: /Users/<you>/PokeVault, Linux: /home/<you>/PokeVault)
+#    Default location: ~/Kiban/Vault  (macOS: /Users/<you>/Kiban/Vault, Linux: /home/<you>/Kiban/Vault)
 if [ ! -d "$VAULT" ]; then
   if [ -d "$PKG/vault" ]; then
     echo "→ creating vault at $VAULT"

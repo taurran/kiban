@@ -1,4 +1,4 @@
-# PokeVault
+# Kiban
 
 **A portable "Second Brain + LLM Wiki" you can carry to any machine.** Clone it, run one script, open
 it in **Obsidian**, and point any AI assistant at `AGENTS.md`. Raw material you collect gets *compiled*
@@ -9,7 +9,7 @@ Plain Markdown. No database, no server, no accounts, no vendor lock-in. Works wi
 Cursor, Codex, Gemini CLI, Aider, a local LLM, or any desktop AI app.
 
 ### Get it
-**`git clone https://github.com/taurran/pokevault.git`** — or **[download the ZIP](https://github.com/taurran/pokevault/archive/refs/heads/master.zip)** (no git needed).
+**`git clone https://github.com/taurran/kiban.git`** — or **[download the ZIP](https://github.com/taurran/kiban/archive/refs/heads/master.zip)** (no git needed).
 Then run `./bootstrap.sh` (macOS/Linux) or `.\bootstrap.ps1` (Windows). That's it — details below.
 
 > **The idea in one line:** compile raw sources into a living Markdown wiki *once*; query the wiki,
@@ -23,14 +23,14 @@ Then run `./bootstrap.sh` (macOS/Linux) or `.\bootstrap.ps1` (Windows). That's i
 
 **Clone (recommended — easiest to update later):**
 ```bash
-git clone https://github.com/taurran/pokevault.git && cd pokevault
+git clone https://github.com/taurran/kiban.git && cd kiban
 ```
-**Or download the ZIP** (no git needed): **[⬇️ pokevault.zip](https://github.com/taurran/pokevault/archive/refs/heads/master.zip)** — extract it and open the `pokevault` folder in a terminal.
+**Or download the ZIP** (no git needed): **[⬇️ kiban.zip](https://github.com/taurran/kiban/archive/refs/heads/master.zip)** — extract it and open the `kiban` folder in a terminal.
 
 <sub>On Windows, a cloned copy usually runs the bootstrap with no fuss; a *downloaded* ZIP can trip PowerShell's script policy — one-line fix in step 2.</sub>
 
 ### 2. Run the bootstrap
-The bootstrap installs the vault into a **local folder** — default `C:\PokeVault` on Windows, `~/PokeVault`
+The bootstrap installs the vault into a **local folder** — default `$env:USERPROFILE\Kiban\Vault` on Windows, `~/Kiban/Vault`
 on macOS/Linux — **and** wires its skills into your coding agent. It asks where to install (press Enter for
 the default or type a custom path), is safe + idempotent, and prints the final vault path on completion.
 
@@ -47,22 +47,22 @@ the default or type a custom path), is safe + idempotent, and prints the final v
   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
   .\bootstrap.ps1
   ```
-- **Custom location:** `./bootstrap.sh ~/Knowledge` (or `.\bootstrap.ps1 -VaultRoot D:\Vaults\PokeVault`).
+- **Custom location:** `./bootstrap.sh ~/Knowledge` (or `.\bootstrap.ps1 -VaultRoot D:\Vaults\Kiban`).
 
 **Or let your AI agent run it for you.** Point your AI assistant at the
-`pokevault` folder and paste this prompt:
+`kiban` folder and paste this prompt:
 
-> Run the PokeVault bootstrap in this folder: execute `./bootstrap.sh` (macOS/Linux) or
-> `.\bootstrap.ps1` (Windows) to install the vault to `~/PokeVault` and wire its skills. Then open
-> `~/PokeVault`, read `AGENTS.md`, and tell me when it's ready.
+> Run the Kiban bootstrap in this folder: execute `./bootstrap.sh` (macOS/Linux) or
+> `.\bootstrap.ps1` (Windows) to install the vault to `~/Kiban/Vault` and wire its skills. Then open
+> `~/Kiban/Vault`, read `AGENTS.md`, and tell me when it's ready.
 
 **Default vault location:**
 
 | OS | Vault path |
 |---|---|
-| macOS | `/Users/<you>/PokeVault` |
-| Linux | `/home/<you>/PokeVault` |
-| Windows | `C:\PokeVault` |
+| macOS | `/Users/<you>/Kiban/Vault` |
+| Linux | `/home/<you>/Kiban/Vault` |
+| Windows | `$env:USERPROFILE\Kiban\Vault` |
 
 ### 3. Open in Obsidian
 **Don't have Obsidian yet?** Download it free from the official site: **[obsidian.md/download](https://obsidian.md/download)**.
@@ -82,9 +82,9 @@ Full, detailed walkthrough (sync/backup, troubleshooting, updates): **`INSTALL.m
 
 ## What the bootstrap does
 
-1. Copies the `vault/` into a local folder — `~/PokeVault` (`C:\PokeVault` on Windows) — skipping if one already exists (never clobbers your data).
-2. Installs the kit's skills to `~/PokeVault/toolkit/skills/<NN-category>/<name>.md` (tool-neutral source, organized by category).
-3. Generates **Claude Code** skill bindings at `~/PokeVault/.claude/skills/<name>/SKILL.md` (the open
+1. Copies the `vault/` into a local folder — `~/Kiban/Vault` (`$env:USERPROFILE\Kiban\Vault` on Windows) — skipping if one already exists (never clobbers your data).
+2. Installs the kit's skills to `~/Kiban/Vault/toolkit/skills/<NN-category>/<name>.md` (tool-neutral source, organized by category).
+3. Generates **Claude Code** skill bindings at `~/Kiban/Vault/.claude/skills/<name>/SKILL.md` (the open
    Agent-Skills format — one folder per skill).
 4. Confirms the engine (`AGENTS.md`) and per-tool pointers are in place.
 
@@ -102,7 +102,7 @@ others point to it.
 | **Local LLM / desktop AI app** | Add the vault as an indexed folder; tell it to read `AGENTS.md` first. |
 
 **Skills everywhere (optional):** to use the skills in Claude Code outside this vault, copy the
-`<name>/` folders from `~/PokeVault/.claude/skills/` to `~/.claude/skills/` (personal scope).
+`<name>/` folders from `~/Kiban/Vault/.claude/skills/` to `~/.claude/skills/` (personal scope).
 
 ### First test
 1. Drop a `.md` file (an article, some notes) into `second-brain/wiki/raw/inbox/`.
@@ -114,7 +114,7 @@ others point to it.
 ## What's inside
 
 ```
-pokevault/
+kiban/
 ├── README.md            ← you are here (the install guide)
 ├── README.txt           ← plain-text quickstart (same steps, no formatting)
 ├── INSTALL.md           ← detailed setup: Obsidian, sync/backup, updates, troubleshooting
@@ -125,10 +125,10 @@ pokevault/
 │   ├── 01-vault-blueprint.md                    ← structure, Obsidian compat, frontmatter, taxonomy
 │   └── 02-llm-wiki-synthesis-and-daily-notes.md ← the LLM-wiki pattern, synthesis, daily notes
 ├── skills/              ← the wiring skills, by category (installed into the vault by bootstrap)
-│   ├── 01-foundations/  ← vault-init, obsidian-setup, profile-build, pokevault-update
+│   ├── 01-foundations/  ← vault-init, obsidian-setup, profile-build, kiban-update
 │   ├── 02-research/     ← research-init, research-promote
 │   └── 08-knowledge/    ← wiki-ingest, wiki-lint, daily-note
-└── vault/               ← THE vault (bootstrap copies this to ~/PokeVault)
+└── vault/               ← THE vault (bootstrap copies this to ~/Kiban/Vault)
     ├── AGENTS.md         ← the engine: the schema every AI assistant reads
     ├── CLAUDE.md  .cursorrules  ← per-tool entry points → AGENTS.md
     ├── second-brain/  work/  personal/  toolkit/  ← the four zones
@@ -183,7 +183,7 @@ any assistant *"Read `toolkit/skills/<category>/<name>.md` and follow it."*
 | `vault-init` | `01-foundations` | *"initialize my vault"* | Scaffold a fresh vault — folders, engine, config, seeds. Idempotent; repairs a partial vault. |
 | `profile-build` | `01-foundations` | *"build my profile"* | Interview you to fill the `second-brain/profile/` cognitive-fingerprint files. |
 | `obsidian-setup` | `01-foundations` | *"set up obsidian"* | Install the recommended plugins and verify the link/ignore settings the wiki needs. |
-| `pokevault-update` | `01-foundations` | *"update my vault"* | Apply a newer release into your vault without touching your data. |
+| `kiban-update` | `01-foundations` | *"update my vault"* | Apply a newer release into your vault without touching your data. |
 | `research-init` | `02-research` | *"start research &lt;name&gt;"* | Scaffold a research project folder from the template. |
 | `research-promote` | `02-research` | *"promote research"* | Compile a ready finding into the curated wiki, with provenance. |
 | `wiki-ingest` | `08-knowledge` | *"process my inbox"* | Compile new `raw/` sources into interlinked wiki pages — dedup, route, cite, flag contradictions. |
@@ -197,7 +197,7 @@ any assistant *"Read `toolkit/skills/<category>/<name>.md` and follow it."*
 Your assistant follows seven **anti-forgetting rules** (`AGENTS.md` §4): append don't rewrite, verify
 against sources, search before create, flag contradictions, provenance on every claim, one canonical
 page per entity, raw is immutable. And every future **update deploys *into* your vault without touching
-your data** (`skills/01-foundations/pokevault-update.md`).
+your data** (`skills/01-foundations/kiban-update.md`).
 
 ## Updating later
 Pull a newer release and re-run `./bootstrap.sh` — it adds new structure and re-syncs skills without
@@ -216,7 +216,7 @@ AI agent needed. Full steps in `INSTALL.md`.
 - `bash` (macOS/Linux) or PowerShell (Windows) to run the bootstrap.
 
 ## Clean-room note
-PokeVault is an independent, clean-room project: plain-Markdown conventions and public patterns only —
+Kiban is an independent, clean-room project: plain-Markdown conventions and public patterns only —
 no proprietary code or content, no vendor lock-in.
 
 ## Credits

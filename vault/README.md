@@ -4,7 +4,7 @@ Welcome. This is your **Second Brain + LLM Wiki** — a portable, Obsidian-nativ
 raw material you collect gets compiled by an AI assistant into persistent, interlinked notes
 that compound over time.
 
-**Open this folder (`~/PokeVault/`) as an Obsidian vault.**
+**Open this folder (`~/Kiban/Vault/`) as an Obsidian vault.**
 
 ## How it works (30 seconds)
 
@@ -36,10 +36,10 @@ instead of hiding them, and treats your raw files as read-only. Your knowledge i
 
 - **`AGENTS.md`** (in this vault) — the complete schema your AI assistant follows. This is the
   in-vault source of truth and is fully self-contained.
-- The PokeVault kit ships two deep references **alongside** this vault (in the kit's `docs/`
+- The Kiban kit ships two deep references **alongside** this vault (in the kit's `docs/`
   folder, not inside the vault):
   - `01-vault-blueprint.md` — full structure, frontmatter standards, hygiene, taxonomy.
   - `02-llm-wiki-synthesis-and-daily-notes.md` — how the wiki, synthesis, and daily notes work.
 
   If you want them inside the vault for offline reference, copy the kit's `docs/` folder to
-  `~/PokeVault/docs/`.
+  `~/Kiban/Vault/docs/`.

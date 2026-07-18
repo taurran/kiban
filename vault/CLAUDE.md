@@ -1,6 +1,6 @@
 # Knowledge Vault
 
-This is a portable knowledge vault (PokeVault) — a "Second Brain + LLM Wiki." Read `AGENTS.md`
+This is a portable knowledge vault (Kiban) — a "Second Brain + LLM Wiki." Read `AGENTS.md`
 in this directory for the complete schema governing all operations (ingest, query, lint, maintenance).
 
 ## Quick Reference

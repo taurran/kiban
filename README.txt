@@ -1,5 +1,5 @@
 ==============================================================================
- PokeVault  -  a portable "Second Brain + LLM Wiki" you carry to any machine
+ Kiban  -  a portable "Second Brain + LLM Wiki" you carry to any machine
  Version 1.1.1
 ==============================================================================
 
@@ -19,9 +19,9 @@ INSTALL (about 60 seconds)
 ------------------------------------------------------------------------------
 1. GET IT
    Clone (recommended - easiest to update later):
-     git clone https://github.com/taurran/pokevault.git && cd pokevault
+     git clone https://github.com/taurran/kiban.git && cd kiban
    Or download the ZIP (no git needed) and extract it:
-     https://github.com/taurran/pokevault/archive/refs/heads/master.zip
+     https://github.com/taurran/kiban/archive/refs/heads/master.zip
 
 2. RUN THE BOOTSTRAP  (installs the vault into a local folder + wires skills;
    safe and idempotent - re-run anytime; asks where to install)
@@ -30,19 +30,19 @@ INSTALL (about 60 seconds)
      (if blocked "not digitally signed", first run this once for the session:
       Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force)
    Custom path:     ./bootstrap.sh ~/Knowledge
-                    .\bootstrap.ps1 -VaultRoot D:\Vaults\PokeVault
+                    .\bootstrap.ps1 -VaultRoot D:\Vaults\Kiban
    The bootstrap prints the final vault path on completion - point Obsidian
    at it.
 
    OR LET YOUR AI AGENT RUN IT - point your assistant at this folder and paste:
-     "Run the PokeVault bootstrap in this folder: execute ./bootstrap.sh (macOS/Linux)
-      or .\bootstrap.ps1 (Windows) to install the vault to ~/PokeVault and wire its skills.
-      Then open ~/PokeVault, read AGENTS.md, and tell me when it's ready."
+     "Run the Kiban bootstrap in this folder: execute ./bootstrap.sh (macOS/Linux)
+      or .\bootstrap.ps1 (Windows) to install the vault to ~/Kiban/Vault and wire its skills.
+      Then open ~/Kiban/Vault, read AGENTS.md, and tell me when it's ready."
 
    Default vault location:
-     macOS    /Users/<you>/PokeVault
-     Linux    /home/<you>/PokeVault
-     Windows  C:\PokeVault
+     macOS    /Users/<you>/Kiban/Vault
+     Linux    /home/<you>/Kiban/Vault
+     Windows  $env:USERPROFILE\Kiban\Vault
 
 3. OPEN IN OBSIDIAN
    Don't have Obsidian? Download it free (official): https://obsidian.md/download
@@ -60,9 +60,9 @@ INSTALL (about 60 seconds)
 
 WHAT THE BOOTSTRAP DOES
 ------------------------------------------------------------------------------
-1. Copies vault/ to ~/PokeVault (skips if one exists - never clobbers your data).
-2. Installs skills to ~/PokeVault/toolkit/skills/<NN-category>/<name>.md (tool-neutral source, by category).
-3. Generates Claude Code bindings at ~/PokeVault/.claude/skills/<name>/SKILL.md.
+1. Copies vault/ to ~/Kiban/Vault (skips if one exists - never clobbers your data).
+2. Installs skills to ~/Kiban/Vault/toolkit/skills/<NN-category>/<name>.md (tool-neutral source, by category).
+3. Generates Claude Code bindings at ~/Kiban/Vault/.claude/skills/<name>/SKILL.md.
 4. Confirms the engine (AGENTS.md) and per-tool pointers are in place.
 
 
@@ -114,7 +114,7 @@ REQUIREMENTS
 
 CLEAN-ROOM NOTE
 ------------------------------------------------------------------------------
-PokeVault is an independent, clean-room project: plain-Markdown conventions and
+Kiban is an independent, clean-room project: plain-Markdown conventions and
 public patterns only - no proprietary code or content, no vendor lock-in.
 
 
